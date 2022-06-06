@@ -1,3 +1,5 @@
 = QT Py =
 
+<img src="http://land-boards.com/blwiki/images/5/52/QT_Py_4600-06.jpg"></img>
+
 [https://www.adafruit.com/product/4600 QT Py] and [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html?queryID=3273c05f7923d5ee5cbc677ce4892180&objectID=4426&indexName=bazaar_retailer_products SeeedStudio XAIO] cards
