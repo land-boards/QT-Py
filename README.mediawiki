@@ -6,3 +6,37 @@
 
 * [https://www.adafruit.com/product/4600 Adafruit QT Py] card
 * [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html?queryID=3273c05f7923d5ee5cbc677ce4892180&objectID=4426&indexName=bazaar_retailer_products SeeedStudio XAIO] card
+
+== SAMD21 QT Py ==
+
+* [https://www.adafruit.com/product/4600 Adafruit QT Py SAMD21 Product Page] [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html?queryID=3273c05f7923d5ee5cbc677ce4892180&objectID=4426&indexName=bazaar_retailer_products Seeeduino XIAO]
+** ATSAMD21E18 32-bit Cortex M0+ version
+** 48 MHz, 32-bit processor
+** 256KB Flash
+** 32 KB RAM
+* Native USB supported by every OS
+** Can be used in Arduino or [https://circuitpython.org/ CircuitPython] as USB serial console, MIDI, Keyboard/Mouse HID, even a little disk drive for storing Python scripts.
+* Built in RGB NeoPixel LED
+* 11 GPIO pins:
+** True analog output on one I/O pin
+*** Can be used to play 10-bit quality audio clips in Arduino 
+**** CircuitPython does not have storage for audio clips
+** 9 x 12-bit analog inputs (SDA/SCL do not have analog inputs)
+** 1 x Optional AREF on A1
+** 9 x PWM outputs (A0 is analog out, A1 is not PWM capable)
+** Hardware I2C port with STEMMA QT plug-n-play connector
+** Hardware UART
+** Hardware SPI
+** Hardware I2S
+** 6 x Capacitive Touch with no additional components required
+* 3.3V regulator with [https://www.diodes.com/assets/Datasheets/AP2112.pdf 600mA peak output] AP2112
+* Optional SOIC-8 SPI Flash chip on bottom (Adafruit board - not Seeedstudio part)
+** Can't use castellated pins if Flash on bottom is installed
+** [https://www.adafruit.com/product/4763 GD25Q16]
+** Access the SPI flash in Arduino on SPI1 and chip select pin 17
+** In CircuitPython, a '[https://circuitpython.org/board/qtpy_m0_haxpress/ haxpress]' version of the runtime will need to be installed, so it knows to look for the larger filesystem
+** There is more hardware support in the haxpress CircuitPython build because we can add more code to the internal flash instead of using it for a filesystem
+*** Built-in modules available: adafruit_pixelbuf, analogio, audiobusio, audiocore, audioio, board, busio, digitalio, displayio, errno, fontio, math, microcontroller, neopixel_write, nvm, onewireio, os, paralleldisplay, pulseio, pwmio, rainbowio, random, rotaryio, rtc, storage, struct, supervisor, terminalio, time, touchio, traceback, usb_cdc, usb_hid, usb_midi
+* Reset switch for starting your project code over or entering bootloader mode
+* USB Type C connector
+
