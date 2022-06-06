@@ -2,11 +2,6 @@
 
 <img src="http://land-boards.com/blwiki/images/5/52/QT_Py_4600-06.jpg"></img>
 
-= SAMD21 CPU Cards =
-
-* [https://www.adafruit.com/product/4600 Adafruit QT Py] card
-* [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html?queryID=3273c05f7923d5ee5cbc677ce4892180&objectID=4426&indexName=bazaar_retailer_products SeeedStudio XAIO] card
-
 == SAMD21 QT Py ==
 
 * [https://www.adafruit.com/product/4600 Adafruit QT Py SAMD21 Product Page] [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html?queryID=3273c05f7923d5ee5cbc677ce4892180&objectID=4426&indexName=bazaar_retailer_products Seeeduino XIAO]
