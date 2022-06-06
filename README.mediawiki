@@ -4,5 +4,5 @@
 
 = SAMD21 CPU Cards =
 
-* [https://www.adafruit.com/product/4600 Adafruit QT Py]
-* [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html?queryID=3273c05f7923d5ee5cbc677ce4892180&objectID=4426&indexName=bazaar_retailer_products SeeedStudio XAIO] cards
+* [https://www.adafruit.com/product/4600 Adafruit QT Py] card
+* [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html?queryID=3273c05f7923d5ee5cbc677ce4892180&objectID=4426&indexName=bazaar_retailer_products SeeedStudio XAIO] card
