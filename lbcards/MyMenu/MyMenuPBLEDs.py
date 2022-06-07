@@ -94,6 +94,6 @@ def doI2CIO8():
             writeLEDs(5)
         else:
             writeLEDs(7)
-        print(swVals)
+        # print(swVals)
 
     i2c.unlock()
