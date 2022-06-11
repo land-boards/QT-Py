@@ -1,3 +1,6 @@
+# I2CIO8_Blink.py
+# Cycle around 4 LEDs on I2CIO8 board
+#
 # https://docs.circuitpython.org/en/latest/shared-bindings/busio/index.html
 # https://developer.sony.com/develop/spresense/docs/circuitpython_tutorials_en.html
 
@@ -58,7 +61,7 @@ def doI2CIO8():
     initI2CIO8()
 
     loopCount = 0
-    while loopCount < 60:
+    while loopCount < 10:
         ledVal = 1
         while ledVal < 0x0F:
             writeLEDs(ledVal)
@@ -66,4 +69,5 @@ def doI2CIO8():
             ledVal <<= 1
         loopCount += 1
 
+    writeLEDs(0)
     i2c.unlock()
