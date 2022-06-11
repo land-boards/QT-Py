@@ -1,4 +1,4 @@
-"""Example for Pico. Blinks the built-in LED."""
+"""Example for XIAO SAM and RP2040 boards. Blinks the built-in LED."""
 import time
 import board
 import digitalio
