@@ -2,6 +2,9 @@
 # Set all MCP23017 pins to outputs
 # Bounce an LED across all 16 pins
 #
+# PROTO16-I2C Wiki page
+# http://land-boards.com/blwiki/index.php?title=PROTO16-I2C
+#
 # Run with
 # import PROTO16_Blink
 # PROTO16_Blink.doPROTO16()
@@ -22,29 +25,29 @@ import time
 MCP23017_BASEADDR = 0x20
 
 # IOCON.BANK0
-MCP23017_IODIRA = 0x00
-MCP23017_IPOLA = 0x02
-MCP23017_GPINTENA = 0x04
-MCP23017_DEFVALA = 0x06
-MCP23017_INTCONA = 0x08
-MCP23017_IOCONA = 0x0A
-MCP23017_GPPUA = 0x0C
-MCP23017_INTFA = 0x0E
-MCP23017_INTCAPA = 0x10
-MCP23017_GPIOA = 0x12
-MCP23017_OLATA = 0x14
+MCP23017_IODIRA = const(0x00)
+MCP23017_IPOLA = const(0x02)
+MCP23017_GPINTENA = const(0x04)
+MCP23017_DEFVALA = const(0x06)
+MCP23017_INTCONA = const(0x08)
+MCP23017_IOCONA = const(0x0A)
+MCP23017_GPPUA = const(0x0C)
+MCP23017_INTFA = const(0x0E)
+MCP23017_INTCAPA = const(0x10)
+MCP23017_GPIOA = const(0x12)
+MCP23017_OLATA = const(0x14)
 
-MCP23017_IODIRB = 0x01
-MCP23017_IPOLB = 0x03
-MCP23017_GPINTENB = 0x05
-MCP23017_DEFVALB = 0x07
-MCP23017_INTCONB = 0x09
-MCP23017_IOCONB = 0x0B
-MCP23017_GPPUB = 0x0D
-MCP23017_INTFB = 0x0F
-MCP23017_INTCAPB = 0x11
-MCP23017_GPIOB = 0x13
-MCP23017_OLATB = 0x15
+MCP23017_IODIRB = const(0x01)
+MCP23017_IPOLB = const(0x03)
+MCP23017_GPINTENB = const(0x05)
+MCP23017_DEFVALB = const(0x07)
+MCP23017_INTCONB = const(0x09)
+MCP23017_IOCONB = const(0x0B)
+MCP23017_GPPUB = const(0x0D)
+MCP23017_INTFB = const(0x0F)
+MCP23017_INTCAPB = const(0x11)
+MCP23017_GPIOB = const(0x13)
+MCP23017_OLATB = const(0x15)
 
 def writeMCP23xxxReg(reg, val):
     passVal = bytearray([reg, val])
@@ -90,7 +93,7 @@ def doPROTO16():
     initPROTO16()
 
     loopCount = 0
-    while loopCount < 60:
+    while loopCount < 10:
         ledVal = 1
         while ledVal < 0x10000:
             writeLEDs(ledVal)
