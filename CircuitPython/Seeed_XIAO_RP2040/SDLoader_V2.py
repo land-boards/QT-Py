@@ -40,35 +40,6 @@ MyMenu_LEFT = const(0x05)
 
 # MyMenu code follows
 
-def waitPB():
-    PBs = MyMenu_NONE
-    while PBs == MyMenu_NONE:
-        PBs = pollPBVals()
-        time.sleep(0.01)
-#     print("waitPB(): PBs",PBs)
-    while pollPBVals() != MyMenu_NONE:
-        pass
-#     assert False,"waitPB(): stop"
-    return PBs
-
-def pollPBVals():
-    kbVal = readPBs()
-#     if kbVal != 0:
-#         print("pollPBVals(): kbVals",kbVal)
-    if kbVal == 0:
-        return MyMenu_NONE
-    elif kbVal == MyMenu_SELECT_BIT:
-        return MyMenu_SELECT
-    elif kbVal == MyMenu_RIGHT_BIT:
-        return MyMenu_RIGHT
-    elif kbVal == MyMenu_DOWN_BIT:
-        return MyMenu_DOWN
-    elif kbVal == MyMenu_UP_BIT:
-        return MyMenu_UP
-    elif (kbVal and MyMenu_LEFT_BIT) == MyMenu_LEFT_BIT:
-        return MyMenu_LEFT
-    return MyMenu_NONE
-
 def writeMCP23xxxReg(reg, val):
     global i2cAddr_MCP23008
     passVal = bytearray([reg, val])
@@ -85,6 +56,31 @@ def readMCP23xxxReg(reg):
     i2c.writeto_then_readfrom(i2cAddr_MCP23008, bytes([reg]), result)
     i2c.unlock()
     return result
+
+def waitPB():
+    PBs = MyMenu_NONE
+    while PBs == MyMenu_NONE:
+        PBs = pollPBVals()
+        time.sleep(0.01)
+    while pollPBVals() != MyMenu_NONE:
+        pass
+    return PBs
+
+def pollPBVals():
+    kbVal = readPBs()
+    if kbVal == 0:
+        return MyMenu_NONE
+    elif (kbVal & MyMenu_SELECT_BIT) == MyMenu_SELECT_BIT:
+        return MyMenu_SELECT
+    elif (kbVal & MyMenu_RIGHT_BIT) == MyMenu_RIGHT_BIT:
+        return MyMenu_RIGHT
+    elif (kbVal & MyMenu_DOWN_BIT) == MyMenu_DOWN_BIT:
+        return MyMenu_DOWN
+    elif (kbVal & MyMenu_UP_BIT) == MyMenu_UP_BIT:
+        return MyMenu_UP
+    elif (kbVal & MyMenu_LEFT_BIT) == MyMenu_LEFT_BIT:
+        return MyMenu_LEFT
+    return MyMenu_NONE
 
 def readPBs():
     rdVal = (int(readMCP23xxxReg(MCP23008_GPIO)[0]) >> 3) & 0x1F
@@ -140,7 +136,6 @@ def findMCPI2CAddr(foundI2CDevices):
             return(checkAddr)
 
 # SD card code
-
 def writeFile():
     with open("/sd/test.txt", "w") as f:
         f.write("Hello world!\r\n")
@@ -187,14 +182,6 @@ def print_directory(path, tabs=0):
         else:
             sizestr = "%0.1f MB" % (filesize / 1000000)
 
-#         prettyprintname = ""
-#         for _ in range(tabs):
-#             prettyprintname += "   "
-#         prettyprintname += file
-#         if isdir:
-#             prettyprintname += "/"
-        #print('{0:<40} Size: {1:>10}'.format(prettyprintname, sizestr))
-
         # recursively print directory contents
         if isdir:
             print_directory(path + "/" + file, tabs + 1)
@@ -203,24 +190,17 @@ def print_directory(path, tabs=0):
 def selectFolder():
     global listOfFolders
     foldersCount = len(listOfFolders)
-    print("Folders count", foldersCount)
-    print("Folders")
-    print(listOfFolders)
     screenCount = int((foldersCount+5)/6)
-    print("screenCount",screenCount)
     for screenNum in range(0,screenCount):
         activeLine = 1
         selectNext = False
         while not selectNext:
             clearDisplay(display)
             printToOLED(display,0,0,"Select /sd folder")
-            print("Select folder")
             for screenLineNum in range (0,7):
                 currentFolderLine = ((screenNum*6)+screenLineNum)
                 if currentFolderLine < foldersCount:
                     printToOLED(display,2,screenLineNum,listOfFolders[currentFolderLine][3:18])
-                    print(listOfFolders[currentFolderLine])
-            print("Next")
             printToOLED(display,0,activeLine,">>")
             printToOLED(display,0,7,"Next folder")
             displayOLED()
@@ -230,7 +210,6 @@ def selectFolder():
             elif x == MyMenu_UP:
                 activeLine -= 1
             elif x == MyMenu_SELECT and (activeLine < 7):
-                print("selected",listOfFolders[((screenNum*6)+activeLine)])
                 return(listOfFolders[((screenNum*6)+activeLine)])
             elif x == MyMenu_SELECT and (activeLine == 7):
                 selectNext = True
@@ -239,24 +218,17 @@ def selectFolder():
 def selectFile():
     global dirFileNames
     filesCount = len(dirFileNames)
-    print("(selectFile): Files count", filesCount)
-    print("Files ")
-    print(dirFileNames)
     screenCount = int((filesCount+5)/6)
-    print("screenCount",screenCount)
     for screenNum in range(0,screenCount):
         activeLine = 1
         selectNext = False
         while not selectNext:
             clearDisplay(display)
             printToOLED(display,0,0,"Select file")
-            print("Select file")
             for screenLineNum in range (1,7):
                 currentFileLine = ((screenNum*6)+screenLineNum)
                 if currentFileLine < filesCount:
-                    print(dirFileNames[currentFileLine])
                     printToOLED(display,2,screenLineNum,dirFileNames[currentFileLine][1][:18])
-            print("Next")
             printToOLED(display,0,activeLine,">>")
             printToOLED(display,0,7,"Next files")
             displayOLED()
@@ -266,12 +238,34 @@ def selectFile():
             elif x == MyMenu_UP:
                 activeLine -= 1
             elif x == MyMenu_SELECT and (activeLine < 7):
-                print("selected",dirFileNames[((screenNum*6)+activeLine)])
                 return(dirFileNames[((screenNum*6)+activeLine)])
             elif x == MyMenu_SELECT and (activeLine == 7):
                 selectNext = True
     assert False,"stop here 2"    
     
+def findFile():
+    getListOfFolders("/sd")
+    selectedPath = selectFolder()
+    print_directory(selectedPath)
+    filesCount = len(dirFileNames)
+    lineCount = 0
+    selectedPathFile = selectFile()
+    return selectedPathFile
+
+def uploadSerial():
+    clearDisplay(display)
+    printToOLED(display,0,0,"Uploading Serial")
+    displayOLED()
+    time.sleep(2)
+    return
+
+def configCOM():
+    clearDisplay(display)
+    printToOLED(display,0,0,"Config Serial")
+    displayOLED()
+    time.sleep(2)
+    return
+
 # Use the board's primary SPI bus
 spi = board.SPI()
 SD_CS = board.D3
@@ -287,23 +281,33 @@ i2cAddr_MCP23008 = findMCPI2CAddr(i2cAddrsFound)
 initI2CIO8()
 
 listOfFolders = []
-getListOfFolders("/sd")
-selectedPath = selectFolder()
-print("selectedPath",selectedPath)
-#assert False,"stop here"
-
 dirFileNames = []
-print_directory(selectedPath)
-#print("Files on filesystem:")
-#print("====================")
-#print("dirFileNames",dirFileNames)
-filesCount = len(dirFileNames)
-print("Files count =",filesCount)
-print("Files")
-lineCount = 0
-
-for pathFileName in dirFileNames:
-    if pathFileName[0] != '/sd/System Volume Information':
-        print(pathFileName)
-selectedPathFile = selectFile()
-print("selectedPathFile",selectedPathFile)
+keepRunning = True
+activeLine=1
+theFile = ('','')
+while keepRunning:
+    clearDisplay(display)
+    printToOLED(display,0,0,"SDLoader V2")
+    printToOLED(display,3,1,"Select file")
+    printToOLED(display,3,2,"Serial upload")
+    printToOLED(display,3,3,"COM port config")
+    printToOLED(display,3,4,"Exit")
+    printToOLED(display,0,activeLine,">>")
+    displayOLED()
+    x = waitPB()
+    if x == MyMenu_DOWN and activeLine < 4:
+        activeLine += 1
+    elif x == MyMenu_UP and activeLine > 1:
+        activeLine -= 1
+    elif x == MyMenu_SELECT:
+        if activeLine == 1:
+            theFile = findFile()
+            print("main(): theFile",theFile)
+        if activeLine == 2:
+            uploadSerial()
+        if activeLine == 3:
+            configCOM()
+        if activeLine == 4:
+            clearDisplay(display)
+            displayOLED()
+            break
