@@ -5,6 +5,8 @@
 = Two versions =
 
 * [http://land-boards.com/blwiki/index.php?title=QT_Py QT Py Wiki page]
+** SAMD21
+** RP2040
 
 == SAMD21 version ==
 
