@@ -8,6 +8,14 @@
 ** SAMD21
 ** RP2040
 
+= Two Manufacturers =
+
+* [https://www.adafruit.com/product/4900 Adafruit QT Py RP2040 Product page]
+* [https://www.adafruit.com/product/4600 Adafruit QT Py SAMD21 Product Page]
+* [https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html Seeed XIAO RP2040 Product page]
+* [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html Seeeduino XIAO]
+
+
 == SAMD21 version ==
 
 * [http://land-boards.com/blwiki/index.php?title=QT_Py_(SAMD_based) SAMD Wiki page]
