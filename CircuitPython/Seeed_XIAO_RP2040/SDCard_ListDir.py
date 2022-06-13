@@ -35,6 +35,7 @@ def readPrintFileLines():
 
 def print_directory(path, tabs=0):
     for file in os.listdir(path):
+        dirFileNames.append(file)
         stats = os.stat(path + "/" + file)
         filesize = stats[6]
         isdir = stats[0] & 0x4000
@@ -58,8 +59,9 @@ def print_directory(path, tabs=0):
         if isdir:
             print_directory(path + "/" + file, tabs + 1)
 
-
+dirFileNames = []
 print("Files on filesystem:")
 print("====================")
 print_directory("/sd")
+print("dirFileNames",dirFileNames)
 
