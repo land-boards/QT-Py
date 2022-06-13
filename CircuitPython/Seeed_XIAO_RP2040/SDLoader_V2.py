@@ -11,6 +11,7 @@ import sdcardio
 import storage
 import os
 import adafruit_ssd1306
+import time
 
 MCP23008_IODIR = const(0x00)
 MCP23008_IPOL = const(0x01)
@@ -24,7 +25,49 @@ MCP23008_INTCAP = const(0x08)
 MCP23008_GPIO = const(0x09)
 MCP23008_OLAT = const(0x0A)
 
+MyMenu_SELECT_BIT = const(0x01)
+MyMenu_RIGHT_BIT = const(0x02)
+MyMenu_DOWN_BIT = const(0x04)
+MyMenu_UP_BIT = const(0x08)
+MyMenu_LEFT_BIT = const(0x10)
+
+MyMenu_NONE = const(0x00)
+MyMenu_SELECT = const(0x01)
+MyMenu_RIGHT = const(0x02)
+MyMenu_DOWN = const(0x03)
+MyMenu_UP = const(0x04)
+MyMenu_LEFT = const(0x05)
+
 # MyMenu code follows
+
+def waitPB():
+    PBs = MyMenu_NONE
+    while PBs == MyMenu_NONE:
+        PBs = pollPBVals()
+        time.sleep(0.01)
+#     print("waitPB(): PBs",PBs)
+    while pollPBVals() != MyMenu_NONE:
+        pass
+#     assert False,"waitPB(): stop"
+    return PBs
+
+def pollPBVals():
+    kbVal = readPBs()
+#     if kbVal != 0:
+#         print("pollPBVals(): kbVals",kbVal)
+    if kbVal == 0:
+        return MyMenu_NONE
+    elif kbVal == MyMenu_SELECT_BIT:
+        return MyMenu_SELECT
+    elif kbVal == MyMenu_RIGHT_BIT:
+        return MyMenu_RIGHT
+    elif kbVal == MyMenu_DOWN_BIT:
+        return MyMenu_DOWN
+    elif kbVal == MyMenu_UP_BIT:
+        return MyMenu_UP
+    elif (kbVal and MyMenu_LEFT_BIT) == MyMenu_LEFT_BIT:
+        return MyMenu_LEFT
+    return MyMenu_NONE
 
 def writeMCP23xxxReg(reg, val):
     global i2cAddr_MCP23008
@@ -181,15 +224,15 @@ def selectFolder():
             printToOLED(display,0,activeLine,">>")
             printToOLED(display,0,7,"Next folder")
             displayOLED()
-            x=input("Up, Down, Select")
-            if x[0] == "d" or x[0] == "D":
+            x = waitPB()
+            if x == MyMenu_DOWN:
                 activeLine += 1
-            elif x[0] == "u" or x[0] == "U":
+            elif x == MyMenu_UP:
                 activeLine -= 1
-            elif (x[0] == "s" or x[0] == "S") and (activeLine < 7):
+            elif x == MyMenu_SELECT and (activeLine < 7):
                 print("selected",listOfFolders[((screenNum*6)+activeLine)])
                 return(listOfFolders[((screenNum*6)+activeLine)])
-            elif (x[0] == "s" or x[0] == "S") and (activeLine == 7):
+            elif x == MyMenu_SELECT and (activeLine == 7):
                 selectNext = True
     assert False,"stop here 1"
    
@@ -217,15 +260,15 @@ def selectFile():
             printToOLED(display,0,activeLine,">>")
             printToOLED(display,0,7,"Next files")
             displayOLED()
-            x=input("Up, Down, Select")
-            if x[0] == "d" or x[0] == "D":
+            x = waitPB()
+            if x == MyMenu_DOWN:
                 activeLine += 1
-            elif x[0] == "u" or x[0] == "U":
+            elif x == MyMenu_UP:
                 activeLine -= 1
-            elif (x[0] == "s" or x[0] == "S") and (activeLine < 7):
+            elif x == MyMenu_SELECT and (activeLine < 7):
                 print("selected",dirFileNames[((screenNum*6)+activeLine)])
                 return(dirFileNames[((screenNum*6)+activeLine)])
-            elif (x[0] == "s" or x[0] == "S") and (activeLine == 7):
+            elif x == MyMenu_SELECT and (activeLine == 7):
                 selectNext = True
     assert False,"stop here 2"    
     
