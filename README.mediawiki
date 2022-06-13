@@ -2,7 +2,7 @@
 
 <img src="http://land-boards.com/blwiki/images/d/d5/QT_Py_RP2040.PNG"></img>
 
-= Two versions =
+= Two pin-compatible versions =
 
 * [http://land-boards.com/blwiki/index.php?title=QT_Py QT Py Wiki page]
 ** SAMD21
