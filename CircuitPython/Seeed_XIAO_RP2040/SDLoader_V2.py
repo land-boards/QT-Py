@@ -164,7 +164,7 @@ def getListOfFolders(path):
         if isdir:
             getListOfFolders(path + "/" + file)
 
-def print_directory(path, tabs=0):
+def readDirectoryToList(path, tabs=0):
     global dirFileNames
     global listOfFolders
     if path not in listOfFolders:
@@ -172,19 +172,19 @@ def print_directory(path, tabs=0):
     for file in os.listdir(path):
         dirFileNames.append((path,file))
         stats = os.stat(path + "/" + file)
-        filesize = stats[6]
+#         filesize = stats[6]
         isdir = stats[0] & 0x4000
 
-        if filesize < 1000:
-            sizestr = str(filesize) + " by"
-        elif filesize < 1000000:
-            sizestr = "%0.1f KB" % (filesize / 1000)
-        else:
-            sizestr = "%0.1f MB" % (filesize / 1000000)
+#         if filesize < 1000:
+#             sizestr = str(filesize) + " by"
+#         elif filesize < 1000000:
+#             sizestr = "%0.1f KB" % (filesize / 1000)
+#         else:
+#             sizestr = "%0.1f MB" % (filesize / 1000000)
 
         # recursively print directory contents
         if isdir:
-            print_directory(path + "/" + file, tabs + 1)
+            readDirectoryToList(path + "/" + file, tabs + 1)
 
 # selectFolder() - Select the folder and return the path
 def selectFolder():
@@ -246,7 +246,7 @@ def selectFile():
 def findFile():
     getListOfFolders("/sd")
     selectedPath = selectFolder()
-    print_directory(selectedPath)
+    readDirectoryToList(selectedPath)
     filesCount = len(dirFileNames)
     lineCount = 0
     selectedPathFile = selectFile()
@@ -259,6 +259,13 @@ def uploadSerial():
     time.sleep(2)
     return
 
+def receiveSerial():
+    clearDisplay(display)
+    printToOLED(display,0,0,"Receiving Serial")
+    displayOLED()
+    time.sleep(2)
+    return
+    
 def configCOM():
     clearDisplay(display)
     printToOLED(display,0,0,"Config Serial")
@@ -289,9 +296,14 @@ while keepRunning:
     clearDisplay(display)
     printToOLED(display,0,0,"SDLoader V2")
     printToOLED(display,3,1,"Select file")
-    printToOLED(display,3,2,"Serial upload")
-    printToOLED(display,3,3,"COM port config")
-    printToOLED(display,3,4,"Exit")
+    printToOLED(display,3,2,"Send file to Ser.")
+    printToOLED(display,3,3,"Rcv file from Ser.")
+    printToOLED(display,3,4,"COM port config")
+    printToOLED(display,3,5,"Exit")
+    if theFile == ('',''):
+        printToOLED(display,0,7,"No file selected")
+    else:
+        printToOLED(display,0,7,theFile[1][:20])
     printToOLED(display,0,activeLine,">>")
     displayOLED()
     x = waitPB()
@@ -306,8 +318,11 @@ while keepRunning:
         if activeLine == 2:
             uploadSerial()
         if activeLine == 3:
-            configCOM()
+            receiveSerial()
         if activeLine == 4:
+            configCOM()
+        if activeLine == 5:
             clearDisplay(display)
             displayOLED()
             break
+        
