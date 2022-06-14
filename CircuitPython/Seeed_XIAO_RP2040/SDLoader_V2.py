@@ -147,12 +147,12 @@ def readPrintFileLine():
 
 def readPrintFileLines(pathFileName):
     with open(pathFileName, "r") as f:
-        print("Printing lines in file:")
+#        print("Printing lines in file:")
         line = f.readline()
         for line in f:
             print(line, end='')
 
-# getListOfFolders - recursively got all paths
+# getListOfFolders - recursively got all paths and put into listOfFolders list
 def getListOfFolders(path):
     global listOfFolders
     tabs = 0
@@ -251,7 +251,7 @@ def uploadSerial():
     printToOLED(display,0,0,"Uploading Serial")
     updateOLEDDisplay()
     pathFileName = selectedFile[0] + selectedFile[1]
-    print("listing file",pathFileName)
+    print("uploadSerial(): listing file",pathFileName)
     readPrintFileLines(pathFileName)
     time.sleep(2)
     return
@@ -296,7 +296,7 @@ def topMenu():
         elif (pbVal == MyMenu_SELECT or pbVal == MyMenu_RIGHT):
             if currentSelectedLine == 1:
                 selectedFile = findFile()
-                print("main(): selectedFile",selectedFile)
+#                 print("main(): selectedFile",selectedFile)
             if currentSelectedLine == 2:
                 uploadSerial()
             if currentSelectedLine == 3:
@@ -327,4 +327,3 @@ dirFileNames = []
 selectedFile = ('','')
 
 topMenu()
-
