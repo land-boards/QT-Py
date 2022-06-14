@@ -1,6 +1,6 @@
 = QT Py =
 
-<img src="http://land-boards.com/blwiki/images/d/d5/QT_Py_RP2040.PNG"></img>
+<img src="http://land-boards.com/blwiki/images/c/ca/QTPy49_P18254-720px.jpg"></img>
 
 = Two pin-compatible versions =
 
