@@ -1,12 +1,16 @@
+<img src="http://land-boards.com/blwiki/images/c/ca/QTPy49_P18254-720px.jpg"></img>
+
 = QT Py =
 
-<img src="http://land-boards.com/blwiki/images/d/d5/QT_Py_RP2040.PNG"></img>
+* CircuitPython and MicroPython Software demos and applications for QT Py or XIAO cards
+* [http://land-boards.com/blwiki/index.php?title=QTPy49 Land Boards adapter card]
+* [https://github.com/land-boards/lb-Arduino-Code/tree/master/LBCards/QTPy49 Arduino code repository]
 
 = Two pin-compatible versions =
 
 * [http://land-boards.com/blwiki/index.php?title=QT_Py QT Py Wiki page]
-** SAMD21
-** RP2040
+** [http://land-boards.com/blwiki/index.php?title=QT_Py_(SAMD_based) SAMD21]
+** [http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based) RP2040]
 
 = Two Manufacturers =
 
@@ -14,12 +18,3 @@
 * [https://www.adafruit.com/product/4600 Adafruit QT Py SAMD21 Product Page]
 * [https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html Seeed XIAO RP2040 Product page]
 * [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html Seeeduino XIAO Product page]
-
-
-== SAMD21 version ==
-
-* [http://land-boards.com/blwiki/index.php?title=QT_Py_(SAMD_based) SAMD Wiki page]
-
-== RP2040 version ==
-
-* [http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based) RP2040 Wiki page]
