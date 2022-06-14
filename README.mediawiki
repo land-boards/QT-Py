@@ -5,8 +5,8 @@
 = Two pin-compatible versions =
 
 * [http://land-boards.com/blwiki/index.php?title=QT_Py QT Py Wiki page]
-** SAMD21
-** RP2040
+** [http://land-boards.com/blwiki/index.php?title=QT_Py_(SAMD_based) SAMD21]
+** [http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based) RP2040]
 
 = Two Manufacturers =
 
