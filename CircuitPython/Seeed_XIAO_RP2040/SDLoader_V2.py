@@ -67,18 +67,18 @@ def waitPB():
     return PBs
 
 def pollPBVals():
-    kbVal = readPBs()
-    if kbVal == 0:
+    pbVals = readPBs()
+    if pbVals == 0:
         return MyMenu_NONE
-    elif (kbVal & MyMenu_SELECT_BIT) == MyMenu_SELECT_BIT:
+    elif (pbVals & MyMenu_SELECT_BIT) == MyMenu_SELECT_BIT:
         return MyMenu_SELECT
-    elif (kbVal & MyMenu_RIGHT_BIT) == MyMenu_RIGHT_BIT:
+    elif (pbVals & MyMenu_RIGHT_BIT) == MyMenu_RIGHT_BIT:
         return MyMenu_RIGHT
-    elif (kbVal & MyMenu_DOWN_BIT) == MyMenu_DOWN_BIT:
+    elif (pbVals & MyMenu_DOWN_BIT) == MyMenu_DOWN_BIT:
         return MyMenu_DOWN
-    elif (kbVal & MyMenu_UP_BIT) == MyMenu_UP_BIT:
+    elif (pbVals & MyMenu_UP_BIT) == MyMenu_UP_BIT:
         return MyMenu_UP
-    elif (kbVal & MyMenu_LEFT_BIT) == MyMenu_LEFT_BIT:
+    elif (pbVals & MyMenu_LEFT_BIT) == MyMenu_LEFT_BIT:
         return MyMenu_LEFT
     return MyMenu_NONE
 
