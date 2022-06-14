@@ -99,7 +99,7 @@ def initI2CIO8():
     writeMCP23xxxReg(MCP23008_OLAT, 0x00)
     readMCP23xxxReg(MCP23008_GPIO)
 
-def clearDisplay(display):
+def clearOLED(display):
     display.fill(0)
 
 def printToOLED(display,xCell,yCell,testStr):
@@ -112,7 +112,7 @@ def printToOLED(display,xCell,yCell,testStr):
             + " in the same directory as this script"
         )
 
-def displayOLED():
+def updateOLEDDisplay():
     try:
         display.show()
     except FileNotFoundError:
@@ -145,13 +145,14 @@ def readPrintFileLine():
         print("Read line from file:")
         print(f.readline(), end='')
 
-def readPrintFileLines():
-    with open("/sd/test.txt", "r") as f:
+def readPrintFileLines(pathFileName):
+    with open(pathFileName, "r") as f:
         print("Printing lines in file:")
         line = f.readline()
         for line in f:
             print(line, end='')
 
+# getListOfFolders - recursively got all paths
 def getListOfFolders(path):
     global listOfFolders
     tabs = 0
@@ -164,6 +165,7 @@ def getListOfFolders(path):
         if isdir:
             getListOfFolders(path + "/" + file)
 
+# readDirectoryToList - Read in the directory to listOfFolders
 def readDirectoryToList(path, tabs=0):
     global dirFileNames
     global listOfFolders
@@ -172,46 +174,37 @@ def readDirectoryToList(path, tabs=0):
     for file in os.listdir(path):
         dirFileNames.append((path,file))
         stats = os.stat(path + "/" + file)
-#         filesize = stats[6]
         isdir = stats[0] & 0x4000
-
-#         if filesize < 1000:
-#             sizestr = str(filesize) + " by"
-#         elif filesize < 1000000:
-#             sizestr = "%0.1f KB" % (filesize / 1000)
-#         else:
-#             sizestr = "%0.1f MB" % (filesize / 1000000)
-
-        # recursively print directory contents
+        # recursively grab directory contents
         if isdir:
             readDirectoryToList(path + "/" + file, tabs + 1)
 
-# selectFolder() - Select the folder and return the path
+# selectFolder() - Select the folder and return the path to the selected folder
 def selectFolder():
     global listOfFolders
     foldersCount = len(listOfFolders)
     screenCount = int((foldersCount+5)/6)
     for screenNum in range(0,screenCount):
-        activeLine = 1
+        currentSelectedLine = 1
         selectNext = False
         while not selectNext:
-            clearDisplay(display)
+            clearOLED(display)
             printToOLED(display,0,0,"Select /sd folder")
             for screenLineNum in range (0,7):
                 currentFolderLine = ((screenNum*6)+screenLineNum)
                 if currentFolderLine < foldersCount:
                     printToOLED(display,2,screenLineNum,listOfFolders[currentFolderLine][3:18])
-            printToOLED(display,0,activeLine,">>")
-            printToOLED(display,0,7,"Next folder")
-            displayOLED()
-            x = waitPB()
-            if x == MyMenu_DOWN:
-                activeLine += 1
-            elif x == MyMenu_UP:
-                activeLine -= 1
-            elif x == MyMenu_SELECT and (activeLine < 7):
-                return(listOfFolders[((screenNum*6)+activeLine)])
-            elif x == MyMenu_SELECT and (activeLine == 7):
+            printToOLED(display,0,currentSelectedLine,">")
+            printToOLED(display,2,7,"Next folder")
+            updateOLEDDisplay()
+            pbVal = waitPB()
+            if pbVal == MyMenu_DOWN:
+                currentSelectedLine += 1
+            elif pbVal == MyMenu_UP:
+                currentSelectedLine -= 1
+            elif (pbVal == MyMenu_SELECT or pbVal == MyMenu_RIGHT) and (currentSelectedLine < 7):
+                return(listOfFolders[((screenNum*6)+currentSelectedLine)])
+            elif (pbVal == MyMenu_SELECT or pbVal == MyMenu_RIGHT) and (currentSelectedLine == 7):
                 selectNext = True
     assert False,"stop here 1"
    
@@ -220,26 +213,26 @@ def selectFile():
     filesCount = len(dirFileNames)
     screenCount = int((filesCount+5)/6)
     for screenNum in range(0,screenCount):
-        activeLine = 1
+        currentSelectedLine = 1
         selectNext = False
         while not selectNext:
-            clearDisplay(display)
+            clearOLED(display)
             printToOLED(display,0,0,"Select file")
             for screenLineNum in range (1,7):
                 currentFileLine = ((screenNum*6)+screenLineNum)
                 if currentFileLine < filesCount:
                     printToOLED(display,2,screenLineNum,dirFileNames[currentFileLine][1][:18])
-            printToOLED(display,0,activeLine,">>")
-            printToOLED(display,0,7,"Next files")
-            displayOLED()
-            x = waitPB()
-            if x == MyMenu_DOWN:
-                activeLine += 1
-            elif x == MyMenu_UP:
-                activeLine -= 1
-            elif x == MyMenu_SELECT and (activeLine < 7):
-                return(dirFileNames[((screenNum*6)+activeLine)])
-            elif x == MyMenu_SELECT and (activeLine == 7):
+            printToOLED(display,0,currentSelectedLine,">")
+            printToOLED(display,2,7,"Next files")
+            updateOLEDDisplay()
+            pbVal = waitPB()
+            if pbVal == MyMenu_DOWN:
+                currentSelectedLine += 1
+            elif pbVal == MyMenu_UP:
+                currentSelectedLine -= 1
+            elif (pbVal == MyMenu_SELECT or pbVal == MyMenu_RIGHT) and (currentSelectedLine < 7):
+                return(dirFileNames[((screenNum*6)+currentSelectedLine)])
+            elif (pbVal == MyMenu_SELECT or pbVal == MyMenu_RIGHT) and (currentSelectedLine == 7):
                 selectNext = True
     assert False,"stop here 2"    
     
@@ -253,25 +246,67 @@ def findFile():
     return selectedPathFile
 
 def uploadSerial():
-    clearDisplay(display)
+    global selectedFile
+    clearOLED(display)
     printToOLED(display,0,0,"Uploading Serial")
-    displayOLED()
+    updateOLEDDisplay()
+    pathFileName = selectedFile[0] + selectedFile[1]
+    print("listing file",pathFileName)
+    readPrintFileLines(pathFileName)
     time.sleep(2)
     return
 
 def receiveSerial():
-    clearDisplay(display)
+    clearOLED(display)
     printToOLED(display,0,0,"Receiving Serial")
-    displayOLED()
+    updateOLEDDisplay()
     time.sleep(2)
     return
     
 def configCOM():
-    clearDisplay(display)
+    clearOLED(display)
     printToOLED(display,0,0,"Config Serial")
-    displayOLED()
+    updateOLEDDisplay()
     time.sleep(2)
     return
+
+def topMenu():
+    global selectedFile
+    loopMenu = True
+    currentSelectedLine = 1
+    while loopMenu:
+        clearOLED(display)
+        printToOLED(display,0,0,"SDLoader V2")
+        printToOLED(display,2,1,"Select file")
+        printToOLED(display,2,2,"Send file to Ser.")
+        printToOLED(display,2,3,"Rcv file from Ser.")
+        printToOLED(display,2,4,"COM port config")
+        printToOLED(display,2,5,"Exit")
+        if selectedFile == ('',''):
+            printToOLED(display,0,7,"No file selected")
+        else:
+            printToOLED(display,0,7,selectedFile[1][:20])
+        printToOLED(display,0,currentSelectedLine,">")
+        updateOLEDDisplay()
+        pbVal = waitPB()
+        if pbVal == MyMenu_DOWN and currentSelectedLine < 5:
+            currentSelectedLine += 1
+        elif pbVal == MyMenu_UP and currentSelectedLine > 1:
+            currentSelectedLine -= 1
+        elif (pbVal == MyMenu_SELECT or pbVal == MyMenu_RIGHT):
+            if currentSelectedLine == 1:
+                selectedFile = findFile()
+                print("main(): selectedFile",selectedFile)
+            if currentSelectedLine == 2:
+                uploadSerial()
+            if currentSelectedLine == 3:
+                receiveSerial()
+            if currentSelectedLine == 4:
+                configCOM()
+            if currentSelectedLine == 5:
+                clearOLED(display)
+                updateOLEDDisplay()
+                break
 
 # Use the board's primary SPI bus
 spi = board.SPI()
@@ -289,40 +324,7 @@ initI2CIO8()
 
 listOfFolders = []
 dirFileNames = []
-keepRunning = True
-activeLine=1
-theFile = ('','')
-while keepRunning:
-    clearDisplay(display)
-    printToOLED(display,0,0,"SDLoader V2")
-    printToOLED(display,3,1,"Select file")
-    printToOLED(display,3,2,"Send file to Ser.")
-    printToOLED(display,3,3,"Rcv file from Ser.")
-    printToOLED(display,3,4,"COM port config")
-    printToOLED(display,3,5,"Exit")
-    if theFile == ('',''):
-        printToOLED(display,0,7,"No file selected")
-    else:
-        printToOLED(display,0,7,theFile[1][:20])
-    printToOLED(display,0,activeLine,">>")
-    displayOLED()
-    x = waitPB()
-    if x == MyMenu_DOWN and activeLine < 4:
-        activeLine += 1
-    elif x == MyMenu_UP and activeLine > 1:
-        activeLine -= 1
-    elif x == MyMenu_SELECT:
-        if activeLine == 1:
-            theFile = findFile()
-            print("main(): theFile",theFile)
-        if activeLine == 2:
-            uploadSerial()
-        if activeLine == 3:
-            receiveSerial()
-        if activeLine == 4:
-            configCOM()
-        if activeLine == 5:
-            clearDisplay(display)
-            displayOLED()
-            break
-        
+selectedFile = ('','')
+
+topMenu()
+
