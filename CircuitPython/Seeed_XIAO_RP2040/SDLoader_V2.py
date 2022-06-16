@@ -75,8 +75,6 @@ HWHandshake = const(0x01)
 XONXOFFHandshake = const(0x02)
 handShake = NoHandshake
 
-serialDebug = True
-
 # MyMenu code follows
 
 # Write to value (val) to MCP23XXX internal register (reg)
@@ -209,11 +207,11 @@ def writeFile():
 def readPrintFileLines(pathFileName):
     global uart
     with open(pathFileName, "r") as f:
-        line = f.readline()
         for line in f:
             if serialDebug:
                 print(line, end='')
             uart.write(bytes(line, 'utf-8'))
+            uart.write(bytes('\r', 'utf-8'))
 
 # getListOfFolders - recursively got all paths and put into listOfFolders list
 def getListOfFolders(path):
@@ -296,9 +294,9 @@ def selectFile():
             printToOLED(display,2,7,"Next files")
             updateOLEDDisplay()
             pbVal = waitPB()
-            if pbVal == MyMenu_DOWN:
+            if pbVal == MyMenu_DOWN and currentSelectedLine < 7:
                 currentSelectedLine += 1
-            elif pbVal == MyMenu_UP:
+            elif pbVal == MyMenu_UP and currentSelectedLine > 0:
                 currentSelectedLine -= 1
             elif (pbVal == MyMenu_SELECT or pbVal == MyMenu_RIGHT) and (currentSelectedLine < 7):
                 return(dirFileNames[((screenNum*6)+currentSelectedLine)])
@@ -361,6 +359,7 @@ def configSerialCOM():
         elif (pbVal == MyMenu_SELECT or pbVal == MyMenu_RIGHT) and (currentSelectedLine == 3):
             configHandshake()
         elif (pbVal == MyMenu_SELECT or pbVal == MyMenu_RIGHT) and (currentSelectedLine == 4):
+            storeConfig()
             return
 
 # setBaudrate() - Sub-menu to set the baud rate
@@ -506,6 +505,10 @@ def setUARTConfig():
     global uart
     global uartInit
     if uartInit:
+        print("setUARTConfig: UART was initialized")
+    else:
+        print("setUARTConfig: UART was not initialized")
+    if uartInit:
         uart.deinit()
     if baudRate == baud300:
         uart = busio.UART(board.TX, board.RX, baudrate=300)
@@ -519,18 +522,13 @@ def setUARTConfig():
         uart = busio.UART(board.TX, board.RX, baudrate=57600)
     elif baudRate == baud115200:
         uart = busio.UART(board.TX, board.RX, baudrate=115200)
+    else:
+        uart = busio.UART(board.TX, board.RX, baudrate=9600)
+    print("setUARTConfig: set uartInit")
     uartInit = True
     return
 
 # uploadSerial() - Upload the selected file on the serial port
-# baudUnconfig = const(0x00)
-# baud300 = const(0x01)
-# baud1200 = const(0x02)
-# baud9600 = const(0x03)
-# baud38400 = const(0x04)
-# baud57600 = const(0x05)
-# baud115200 = const(0x06)
-# baudRate = baudUnconfig
 def uploadSerial():
     global selectedFile
     pathFileName = selectedFile[0] + selectedFile[1]
@@ -550,6 +548,7 @@ def uploadSerial():
     updateOLEDDisplay()
     readPrintFileLines(pathFileName)
     printToOLED(display,0,2,"Upload is Done!")
+    updateOLEDDisplay()
     time.sleep(2)
     return
 
@@ -573,11 +572,9 @@ def topMenu():
     global selectedFile
     global uart
     global uartInit
-    uartInit = False
+#     setUARTConfig()
     loopMenu = True
     currentSelectedLine = 1
-    setUARTConfig()
-#    uart = busio.UART(board.TX, board.RX, baudrate=9600)
     while loopMenu:
         clearOLED(display)
         printToOLED(display,0,0,"SDLoader V2")
@@ -613,6 +610,56 @@ def topMenu():
                 updateOLEDDisplay()
                 break
 
+# initConfig() - Initialize the configuration parameter values
+def initConfig():
+    global baudRate
+    global serProtocol
+    global handShake
+    print("initConfig: Got here")
+    baudRate = baud9600
+    serProtocol = straightSerial
+    handShake = NoHandshake
+    print("initConfig: Storing initial values")
+    storeConfig()
+    print("initConfig: Stored")
+    return
+
+# loadConfig() - Load the configuration parameters from the SD card
+def loadConfig():
+    global baudRate
+    global serProtocol
+    global handShake
+    try:
+        with open('/sd/SDLdr.cfg', 'r') as fp:
+            comCfg = fp.read()
+            cfgList = comCfg.split(',')
+            baudRate = int(cfgList[0])
+#             print("loadConfig: baudRate",baudRate)
+            serProtocol = int(cfgList[1])
+#             print("loadConfig: serProtocol",serProtocol)
+            handShake = int(cfgList[2])
+#             print("loadConfig: handShake",handShake)
+    except OSError as e:  # Typically when the filesystem isn't writeable...
+        assert False,"loadConfig: file read error"
+    setUARTConfig()
+    return
+    
+# storeConfig() - Store the configuration parameters to the SD card
+def storeConfig():
+    global baudRate
+    global serProtocol
+    global handShake
+    print("storeConfig: Got here")
+    try:
+        with open('/sd/SDLdr.cfg', 'w') as fp:
+            fp.write(str(baudRate) + ',' + str(serProtocol) + ',' + str(handShake))
+            fp.flush()
+    except OSError as e:  # Typically when the filesystem isn't writeable...
+        assert False,"storeConfig: file write error"
+    return
+    
+serialDebug = True
+
 # Use the board's primary SPI bus
 spi = board.SPI()
 SD_CS = board.D3
@@ -620,7 +667,7 @@ sdcard = sdcardio.SDCard(spi, SD_CS)
 vfs = storage.VfsFat(sdcard)
 storage.mount(vfs, "/sd")
 
-i2c = busio.I2C(board.SCL, board.SDA, frequency=400000)
+i2c = busio.I2C(board.SCL, board.SDA, frequency=400_000)
 display = adafruit_ssd1306.SSD1306_I2C(128, 64, i2c)
 i2cAddrsFound = scanI2C()
 i2cAddr_MCP23008 = findFirstMCPI2CAddr(i2cAddrsFound)
@@ -628,6 +675,15 @@ i2cAddr_MCP23008 = findFirstMCPI2CAddr(i2cAddrsFound)
 initI2CIO8()
 uartInit = False
 
+osList = os.listdir('/sd')
+print("main: osList",osList)
+if 'SDLdr.cfg' not in osList:
+    print('main: No SDLoader_cfg.txt file')
+    initConfig()
+else:
+    print("main: SDLdr.cfg found")
+    loadConfig()
+    
 listOfFolders = []
 dirFileNames = []
 selectedFile = ('','')
