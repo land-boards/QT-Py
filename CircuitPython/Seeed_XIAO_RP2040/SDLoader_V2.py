@@ -504,10 +504,11 @@ def errorMessage(errorMsg):
 def setUARTConfig():
     global uart
     global uartInit
-    if uartInit:
-        print("setUARTConfig: UART was initialized")
-    else:
-        print("setUARTConfig: UART was not initialized")
+    if serialDebug:
+        if uartInit:
+            print("setUARTConfig: UART was initialized")
+        else:
+            print("setUARTConfig: UART was not initialized")
     if uartInit:
         uart.deinit()
     if baudRate == baud300:
@@ -524,7 +525,8 @@ def setUARTConfig():
         uart = busio.UART(board.TX, board.RX, baudrate=115200)
     else:
         uart = busio.UART(board.TX, board.RX, baudrate=9600)
-    print("setUARTConfig: set uartInit")
+    if serialDebug:
+        print("setUARTConfig: set uartInit")
     uartInit = True
     return
 
@@ -615,13 +617,16 @@ def initConfig():
     global baudRate
     global serProtocol
     global handShake
-    print("initConfig: Got here")
+    if serialDebug:
+        print("initConfig: Got here")
     baudRate = baud9600
     serProtocol = straightSerial
     handShake = NoHandshake
-    print("initConfig: Storing initial values")
+    if serialDebug:
+        print("initConfig: Storing initial values")
     storeConfig()
-    print("initConfig: Stored")
+    if serialDebug:
+        print("initConfig: Stored")
     return
 
 # loadConfig() - Load the configuration parameters from the SD card
@@ -634,11 +639,14 @@ def loadConfig():
             comCfg = fp.read()
             cfgList = comCfg.split(',')
             baudRate = int(cfgList[0])
-#             print("loadConfig: baudRate",baudRate)
+            if serialDebug:
+                print("loadConfig: baudRate",baudRate)
             serProtocol = int(cfgList[1])
-#             print("loadConfig: serProtocol",serProtocol)
+            if serialDebug:
+                print("loadConfig: serProtocol",serProtocol)
             handShake = int(cfgList[2])
-#             print("loadConfig: handShake",handShake)
+            if serialDebug:
+                print("loadConfig: handShake",handShake)
     except OSError as e:  # Typically when the filesystem isn't writeable...
         assert False,"loadConfig: file read error"
     setUARTConfig()
@@ -649,7 +657,8 @@ def storeConfig():
     global baudRate
     global serProtocol
     global handShake
-    print("storeConfig: Got here")
+    if serialDebug:
+        print("storeConfig: Got here")
     try:
         with open('/sd/SDLdr.cfg', 'w') as fp:
             fp.write(str(baudRate) + ',' + str(serProtocol) + ',' + str(handShake))
@@ -658,7 +667,7 @@ def storeConfig():
         assert False,"storeConfig: file write error"
     return
     
-serialDebug = True
+serialDebug = False
 
 # Use the board's primary SPI bus
 spi = board.SPI()
@@ -676,12 +685,15 @@ initI2CIO8()
 uartInit = False
 
 osList = os.listdir('/sd')
-print("main: osList",osList)
+if serialDebug:
+    print("main: osList",osList)
 if 'SDLdr.cfg' not in osList:
-    print('main: No SDLoader_cfg.txt file')
+    if serialDebug:
+        print('main: No SDLoader_cfg.txt file')
     initConfig()
 else:
-    print("main: SDLdr.cfg found")
+    if serialDebug:
+        print("main: SDLdr.cfg found")
     loadConfig()
     
 listOfFolders = []
