@@ -30,6 +30,34 @@ import adafruit_gps
 import time
 import gc
 
+def format_dop(dop):
+    # https://en.wikipedia.org/wiki/Dilution_of_precision_(navigation)
+    if dop > 20:
+        msg = "Poor"
+    elif dop > 10:
+        msg = "Fair"
+    elif dop > 5:
+        msg = "Moderate"
+    elif dop > 2:
+        msg = "Good"
+    elif dop > 1:
+        msg = "Excellent"
+    else:
+        msg = "Ideal"
+    return f"{dop} - {msg}"
+
+
+talkers = {
+    "GA": "Galileo",
+    "GB": "BeiDou",
+    "GI": "NavIC",
+    "GL": "GLONASS",
+    "GP": "GPS",
+    "GQ": "QZSS",
+    "GN": "GNSS",
+}
+
+
 # For most CircuitPython boards:
 # led = digitalio.DigitalInOut(board.LED)
 # For QT Py M0:
@@ -53,14 +81,15 @@ while True:
 # as fast as data comes from the GPS unit (usually every second).
 # This returns a bool that's true if it parsed new data (you can ignore it
 # though if you don't care and instead look at the has_fix property).
+    #print("Free space",gc.mem_free())
     if not gps.update() or not gps.has_fix:
+#         if not gps.has_fix:
+#             print("Waiting for fix")
         time.sleep(0.1)
-        print("Waiting",lc)
-        lc += 1
+        gc.collect()
         continue
 
-#     time.sleep(0.25)
-    print("Not waiting")
+    gc.collect()
     if gps.nmea_sentence[3:6] == "GSA":
         print(f"{gps.latitude:.6f}, {gps.longitude:.6f} {gps.altitude_m}m")
         print(f"2D Fix: {gps.has_fix}  3D Fix: {gps.has_3d_fix}")
@@ -84,51 +113,3 @@ while True:
                 except KeyError:
                     print("- no info")
         print()
-
-
-
-# namespace
-# {
-#   struct GPS_TP5_MSG
-#   {
-#     uint8_t   header1;
-#     uint8_t   header2;
-#     uint8_t   message_class;
-#     uint8_t   message_id;
-#     uint16_t  length;
-#     uint8_t   timepulse_idx;
-#     uint8_t   version;
-#     uint16_t  reserved;
-#     int16_t   antenna_cable_delay;
-#     int16_t   rf_group_delay;
-#     uint32_t  frequency_unlocked;
-#     uint32_t  frequency_locked;
-#     uint32_t  duty_cycle_unlocked;
-#     uint32_t  duty_cycle_locked;
-#     uint32_t  user_delay;
-#     uint32_t  flags;
-#     uint16_t  checksum;
-#   } __attribute__((packed));
-# 
-#   const uint16_t GPS_TP5_ACTIVE           = 0x01;
-#   const uint16_t GPS_TP5_SYNC_TO_GNSS     = 0x02;
-#   const uint16_t GPS_TP5_LOCKED_OTHER_SET = 0x04;
-#   const uint16_t GPS_TP5_IS_FREQUENCY     = 0x08;
-#   const uint16_t GPS_TP5_IS_LENGTH        = 0x10;
-#   const uint16_t GPS_TP5_ALIGN_TO_TOW     = 0x20;
-#   const uint16_t GPS_TP5_POLARITY_RISING  = 0x40;
-# 
-#   const uint32_t GPS_TP5_DUTY_CYCLE_50    = 0x80000000;
-#   
-#   uint16_t calculateChecksum(uint8_t *p, size_t len)
-#   {
-#     uint8_t ck_a = 0;
-#     uint8_t ck_b = 0;
-#     while (len--)
-#     {
-#       ck_a = ck_a + *p++;
-#       ck_b = ck_b + ck_a;
-#     }
-#     return ck_a | (ck_b << 8);
-#   }
-# }
