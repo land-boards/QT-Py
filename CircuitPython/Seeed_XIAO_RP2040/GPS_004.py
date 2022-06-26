@@ -65,11 +65,15 @@ while True:
             data_string = ''.join([chr(b) for b in serByteString])
             if 'GPGGA' in data_string:
                 print(data_string, end="")
-                numSats=int(data_string[46:48])
-                print("Num Sats",numSats)
-                if numSats == 0:
-                    freqSet = False
-                elif not freqSet and numSats > 0:
-                    uart.write(bytStr)
-                    freqSet = True
+                if len(data_string) > 48:
+                    if data_string[45] == ',' and data_string[48] == ',':
+                        print("sats str",data_string[46:48])
+                        numSats=int(data_string[46:48])
+                        if numSats == 0:
+                            freqSet = False
+                        elif not freqSet and numSats > 0:
+                            print("Num Sats",numSats)
+                            print(data_string, end="")
+                            uart.write(bytStr)
+                            freqSet = True
             serByteString = b''
