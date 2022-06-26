@@ -69,9 +69,10 @@ serByteString = b''
 ledCount = 0
 while True:
     serVal = uart.read(1)
-    if ledCount > 1000:
+    if ledCount > 500:
         ledCount = 0
         led.Value = not led.Value
+        ledCount += 1
     if serVal is not None:
         serByteString += serVal        
         if chr(serVal[0]) == '\n':
@@ -89,4 +90,5 @@ while True:
 #                             print(data_string, end="")
                             uart.write(bytStr)
                             freqSet = True
+                            led.value = True
             serByteString = b''
