@@ -39,4 +39,4 @@ while True:
     if serData is not None:
         data_string = ''.join([chr(b) for b in serData])
         print(data_string, end="")
-        print("Free space",gc.mem_free())
+        # print("\nFree space",gc.mem_free())
