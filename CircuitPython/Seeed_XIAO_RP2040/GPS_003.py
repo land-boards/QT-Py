@@ -1,4 +1,4 @@
-# GPS_002.py
+# GPS_003.py
 # Communicate with a NEO-7M GPS module
 # Read/print serial data
 # Runs on XIAO RP2040 board
@@ -42,7 +42,7 @@ import gc
 
 uart = busio.UART(board.TX, board.RX, baudrate=9600)
 
-print("GPS002.py")
+print("GPS003.py")
 print("Free space",gc.mem_free())
 serByteString = b''
 while True:

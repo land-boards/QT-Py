@@ -1,4 +1,4 @@
-# GPS_001.py
+# GPS_002.py
 # Communicate with a NEO-7M GPS module
 # Read/print serial data
 # Runs on XIAO RP2040 board
