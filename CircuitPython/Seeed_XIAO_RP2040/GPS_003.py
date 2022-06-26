@@ -34,12 +34,12 @@ uart = busio.UART(board.TX, board.RX, baudrate=9600)
 
 print("GPS002.py")
 print("Free space",gc.mem_free())
-serByteString = ''
+serByteString = b''
 while True:
     serVal = uart.read(1)
     if serVal is not None:
-        serByteString += serVal
-        if chr(serVal) == '\n':
+        serByteString += serVal        
+        if chr(serVal[0]) == '\n':
             data_string = ''.join([chr(b) for b in serByteString])
             print(data_string, end="")
-            serByteString = ''
+            serByteString = b''
