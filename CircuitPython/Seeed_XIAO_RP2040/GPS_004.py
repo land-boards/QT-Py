@@ -1,4 +1,5 @@
 # GPS_004.py
+# Save as code.py to make it auto-run
 # Communicate with a NEO-7M GPS module
 # Read/print serial data
 # Runs on XIAO RP2040 board
@@ -23,6 +24,8 @@
 # GND      Black  QTPy49 J5-1   PulseGen GND
 # VCC      Red    QTPy49 J5-2   PulseGen VCC
 # PPS      Purple GPU pin 1     PulseGen In
+# 
+# Capture of data from GPS
 # $GPGLL,4000.43027,N,07935.34703,W,115133.00,A,A*72
 # $GPRMC,115134.00,A,4000.43027,N,07935.34678,W,0.207,,260622,,,A*66
 # $GPVTG,,T,,M,0.207,N,0.384,K,A*29
@@ -39,6 +42,7 @@
 import board
 import busio
 import digitalio
+from digitalio import DigitalInOut, Direction, Pull
 import time
 import gc
 
@@ -54,26 +58,35 @@ bytStr = b'\xB5\x62\x06\x31\x20\x00\x00\x01\x00\x00\x32\x00\x00\x00\x05\x0D\x00\
 # bytStr = b'\xB5\x62\x06\x31\x20\x00\x00\x01\x00\x00\x32\x00\x00\x00\x05\x0D\x00\x00\x40\x42\x0F\x00\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00\x00\x00\x0F\x00\x00\x00\x3C\x35'
 
 freqSet = False
-print("GPS004.py")
-print("Free space",gc.mem_free())
+# print("GPS004.py")
+# print("Free space",gc.mem_free())
+
+led = DigitalInOut(board.D0)
+led.direction = Direction.OUTPUT
+led.value = False
+
 serByteString = b''
+ledCount = 0
 while True:
     serVal = uart.read(1)
+    if ledCount > 1000:
+        ledCount = 0
+        led.Value = not led.Value
     if serVal is not None:
         serByteString += serVal        
         if chr(serVal[0]) == '\n':
             data_string = ''.join([chr(b) for b in serByteString])
             if 'GPGGA' in data_string:
-                print(data_string, end="")
+                #print(data_string, end="")
                 if len(data_string) > 48:
                     if data_string[45] == ',' and data_string[48] == ',':
-                        print("sats str",data_string[46:48])
+                        # print("sats str",data_string[46:48])
                         numSats=int(data_string[46:48])
                         if numSats == 0:
                             freqSet = False
                         elif not freqSet and numSats > 0:
-                            print("Num Sats",numSats)
-                            print(data_string, end="")
+#                             print("Num Sats",numSats)
+#                             print(data_string, end="")
                             uart.write(bytStr)
                             freqSet = True
             serByteString = b''
