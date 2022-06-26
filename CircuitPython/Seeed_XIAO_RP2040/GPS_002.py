@@ -31,15 +31,10 @@ import time
 import gc
 
 uart = busio.UART(board.TX, board.RX, baudrate=9600)
-#gps = adafruit_gps.GPS(uart, debug=False)
 
 print("GPS002.py")
 print("Free space",gc.mem_free())
 while True:
-# Make sure to call gps.update() every loop iteration and at least twice
-# as fast as data comes from the GPS unit (usually every second).
-# This returns a bool that's true if it parsed new data (you can ignore it
-# though if you don't care and instead look at the has_fix property).
     serData = uart.read(32)
     if serData is not None:
         data_string = ''.join([chr(b) for b in serData])
