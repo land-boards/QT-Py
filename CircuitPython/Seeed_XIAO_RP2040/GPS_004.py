@@ -63,7 +63,10 @@ freqSet = False
 
 led = DigitalInOut(board.D0)
 led.direction = Direction.OUTPUT
+led.value = True
+time.sleep(1)
 led.value = False
+
 
 serByteString = b''
 ledCount = 0
