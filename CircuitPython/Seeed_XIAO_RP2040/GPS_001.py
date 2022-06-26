@@ -73,6 +73,7 @@ print("Sent 1st")
 time.sleep(1)
 gps.send_command(b"PMTK220,1000")
 print("Sent 2nd - looping")
+time.sleep(1)
 print("Free space",gc.mem_free())
 lc=0
 
@@ -92,6 +93,7 @@ def setFreqMHz(freqValMHz):
         bytStr = b'\xB5\x62\x06\x31\x20\x00\x00\x01\x00\x00\x32\x00\x00\x00\x05\x0D\x00\x00\x00\x12\x7A\x00\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00\x00\x00\x0F\x00\x00\x00\x37\x2B'
     elif freqValMHz ==  1:
         bytStr = b'\xB5\x62\x06\x31\x20\x00\x00\x01\x00\x00\x32\x00\x00\x00\x05\x0D\x00\x00\x40\x42\x0F\x00\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00\x00\x00\x0F\x00\x00\x00\x3C\x35'
+    print("Len of msg",len(bytStr))
     gps.write(bytStr)
     return
 
@@ -102,22 +104,23 @@ while True:
 # as fast as data comes from the GPS unit (usually every second).
 # This returns a bool that's true if it parsed new data (you can ignore it
 # though if you don't care and instead look at the has_fix property).
-    #print("Free space",gc.mem_free())
     if not gps.update() or not gps.has_fix:
         if not gps.has_fix:
             freqSet = False
-        else:
+        elif not freqSet:
             freqSet = True
+            setFreqMHz(10)
+            time.sleep(0.5)
         time.sleep(0.1)
+        if gc.mem_free() < 120000:
+            print("Garbage collect(1)")
+            gc.collect()
+         
+    if gc.mem_free() < 120000:
+        print("Garbage collect(2)")
         gc.collect()
-        continue
 
-    if not freqSet:
-        freqSet = True
-        setFreqMHz(10)
-
-    gc.collect()
-    if gps.nmea_sentence[3:6] == "GSA":
+    if gps.nmea_sentence != None and gps.nmea_sentence[3:6] == "GSA":
         print(f"{gps.latitude:.6f}, {gps.longitude:.6f} {gps.altitude_m}m")
         print(f"2D Fix: {gps.has_fix}  3D Fix: {gps.has_3d_fix}")
         print(f"  PDOP (Position Dilution of Precision): {format_dop(gps.pdop)}")
