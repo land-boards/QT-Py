@@ -1,20 +1,17 @@
 # GPS_004.py
+# https://github.com/land-boards/QT-Py/blob/main/CircuitPython/Seeed_XIAO_RP2040/GPS_004.py
+# Tool to create bytestrings
+# https://github.com/land-boards/lb-Arduino-Code/tree/master/LBCards/GPSFreqStd/FreqStdCap
 # Save as code.py to make it auto-run
 # Communicate with a NEO-7M GPS module
-# Read/print serial data
-# Runs on XIAO RP2040 board
-# http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based)
 # On QTPy49 card
 # http://land-boards.com/blwiki/index.php?title=QTPy49
+# Runs on Adafruit QT Py or XIAO SAMD21 or RP2040 boards
+# http://land-boards.com/blwiki/index.php?title=QT_Py_(SAMD_based)
 # 
 # Based on
 # https://learn.adafruit.com/circuitpython-essentials/circuitpython-uart-serial
 #
-# Docs
-# https://docs.circuitpython.org/projects/gps/en/latest/api.html#implementation-notes
-# https://docs.circuitpython.org/projects/gps/en/latest/
-# https://github.com/adafruit/Adafruit_CircuitPython_GPS
-# 
 # Wiring
 # Signal   Color  From          To
 # GND      Black  QTPy49 J4-1   GPS pin 4
@@ -25,7 +22,7 @@
 # VCC      Red    QTPy49 J5-2   PulseGen VCC
 # PPS      Purple GPU pin 1     PulseGen In
 # 
-# Capture of data from GPS
+# Capture of data from GPS after sync
 # $GPGLL,4000.43027,N,07935.34703,W,115133.00,A,A*72
 # $GPRMC,115134.00,A,4000.43027,N,07935.34678,W,0.207,,260622,,,A*66
 # $GPVTG,,T,,M,0.207,N,0.384,K,A*29
@@ -48,6 +45,10 @@ import gc
 
 uart = busio.UART(board.TX, board.RX, baudrate=9600)
 
+# Created byte strings for typical values
+# Created using utility running on Arduino
+# https://github.com/land-boards/lb-Arduino-Code/tree/master/LBCards/GPSFreqStd/FreqStdCap
+ 
 # 10 MHz output
 bytStr = b'\xB5\x62\x06\x31\x20\x00\x00\x01\x00\x00\x32\x00\x00\x00\x05\x0D\x00\x00\x80\x96\x98\x00\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00\x00\x00\x0F\x00\x00\x00\x59\x13'
 
@@ -66,7 +67,6 @@ led.direction = Direction.OUTPUT
 led.value = True
 time.sleep(1)
 led.value = False
-
 
 serByteString = b''
 ledCount = 0
