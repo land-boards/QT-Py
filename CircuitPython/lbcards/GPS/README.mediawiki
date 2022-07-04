@@ -45,3 +45,4 @@ Stand-alone design does not require PC. Generates a 10 MHz output after satellit
 
 * Working code
 * Hard-coded to wait for lock and set freq to 10 MHz
+* Blinks LED to show status
