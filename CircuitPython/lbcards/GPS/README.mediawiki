@@ -35,11 +35,11 @@ Stand-alone design does not require PC. Generates a 10 MHz output after satellit
 
 == GPS_002.py ==
 
-* Display all data from the GPS
+* Read 32 bytes at a time
 
 == GPS_003.py ==
 
-* Display all data from the GPS
+* Capture data from GPS module a line at a time - helpful for debugging
 
 == GPS_004.py ==
 
