@@ -41,8 +41,12 @@ def initI2CIO8():
     writeMCP23xxxReg(MCP23008_IPOL, 0xF0)
     writeMCP23xxxReg(MCP23008_GPINTEN, 0x0F)
     writeMCP23xxxReg(MCP23008_INTCON, 0x00)
-    writeMCP23xxxReg(MCP23008_IOCON, 0x22)
-    writeMCP23xxxReg(MCP23008_GPPU, 0x00)
+    writeMCP23xxxReg(MCP23008_IOCON, 0x24)
+    # SEQOP - Disable sequential operation
+    # ODR - Open Drain output
+    # INTPOL - Active low
+    writeMCP23xxxReg(i2cAddr,MCP23008_IOCON, 0x26)
+    writeMCP23xxxReg(i2cAddr,MCP23008_GPPU, 0x00)
 
 i2c = busio.I2C(board.SCL, board.SDA)
 
