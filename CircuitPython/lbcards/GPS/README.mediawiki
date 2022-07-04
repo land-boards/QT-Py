@@ -10,7 +10,7 @@
 Stand-alone design does not require PC. Generates a 10 MHz output after satellite lock.
 
 * [https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=gps+module+neo-7M&_sacat=0&LH_TitleDesc=0&rt=nc&_odkw=gps+module+neo-7&_osacat=0&LH_PrefLoc=2 NEO-7M GPS]
-* Code runs on multiple CPUs
+* Code runs on multiple CPUs on [http://land-boards.com/blwiki/index.php?title=QTPy49 QTPy49 card]
 ** [[QT Py (SAMD based)]] or
 *** [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html?queryID=3273c05f7923d5ee5cbc677ce4892180&objectID=4426&indexName=bazaar_retailer_products SeeedStudio XIAO] or
 *** [https://www.adafruit.com/product/4600 Adafruit QT Py]
