@@ -28,7 +28,7 @@ Stand-alone design does not require PC. Generates a 10 MHz output after satellit
 
 == GPS_001.py ==
 
-* Display'GSA' sentences from the GPS
+* Display 'GSA' sentences from the GPS
 
 == GPS_002.py ==
 
