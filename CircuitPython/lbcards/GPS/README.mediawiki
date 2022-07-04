@@ -1,6 +1,6 @@
-= GPS Frequency Standard Software =
-
 <img src="http://land-boards.com/blwiki/images/1/1e/GPS_Freq_Std_P18346-cropped-720px.jpg"></img>
+
+= GPS Frequency Standard Software =
 
 * [http://land-boards.com/blwiki/index.php?title=GPS_Frequency_Standard Wiki Page]
 * [https://hackaday.io/project/186090-10-mhz-gps-frequency-standard Hackaday.io page]
