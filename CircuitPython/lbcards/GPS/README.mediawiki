@@ -11,7 +11,7 @@ Stand-alone design does not require PC. Generates a 10 MHz output after satellit
 
 * [https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=gps+module+neo-7M&_sacat=0&LH_TitleDesc=0&rt=nc&_odkw=gps+module+neo-7&_osacat=0&LH_PrefLoc=2 NEO-7M GPS]
 * [http://land-boards.com/blwiki/index.php?title=QTPy49 QTPy49] card
-** [https://github.com/land-boards/QT-Py/blob/main/CircuitPython/lbcards/GPS/GPS_004.pyy CircuitPython code] fits into [http://land-boards.com/blwiki/index.php?title=QT_Py_(SAMD_based) QT Py (SAMD based)] but a [http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based) QT Py (RP2040 based)] could be used
+** [https://github.com/land-boards/QT-Py/blob/main/CircuitPython/lbcards/GPS/GPS_004.py CircuitPython code] fits into [http://land-boards.com/blwiki/index.php?title=QT_Py_(SAMD_based) QT Py (SAMD based)] but a [http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based) QT Py (RP2040 based)] could be used
 ** 3.3V, 48 MHz
 * Modified [http://land-boards.com/blwiki/index.php?title=PulseGen PulseGen] card
 ** Oscillator circuit removed (not used as pulse generator)
