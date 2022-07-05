@@ -1,0 +1,52 @@
+<img src="http://land-boards.com/blwiki/images/1/1e/GPS_Freq_Std_P18346-cropped-720px.jpg"></img>
+
+= GPS Frequency Standard Software =
+
+* [http://land-boards.com/blwiki/index.php?title=GPS_Frequency_Standard Wiki Page]
+* [https://hackaday.io/project/186090-10-mhz-gps-frequency-standard Hackaday.io page]
+
+= Build V2 Features =
+
+Stand-alone design does not require PC. Generates a 10 MHz output after satellite lock.
+
+* [https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=gps+module+neo-7M&_sacat=0&LH_TitleDesc=0&rt=nc&_odkw=gps+module+neo-7&_osacat=0&LH_PrefLoc=2 NEO-7M GPS]
+* Code runs on multiple CPUs on [http://land-boards.com/blwiki/index.php?title=QTPy49 QTPy49 breakout card]
+** [[QT Py (SAMD based)]] or
+*** [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html?queryID=3273c05f7923d5ee5cbc677ce4892180&objectID=4426&indexName=bazaar_retailer_products SeeedStudio XIAO] or
+*** [https://www.adafruit.com/product/4600 Adafruit QT Py]
+** [[QT_Py_(RP2040_based)]]
+*** [https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html SeeedStudio XIAO]
+*** [https://www.adafruit.com/product/4900 Adafruit QT Py]
+** 3.3V
+** 48 MHz (SAMD version)
+** 133 MHz (RP2040 version)
+* Modified [http://land-boards.com/blwiki/index.php?title=PulseGen PulseGen] card
+** Oscillator circuit removed (not used as pulse generator)
+** Receives input from GPS output and drives 50 Ohm output on BNC
+* Status LED
+** Blinks in for 1 second at power up
+** Goes off until serial communications are working
+** Blinks on-off as data is received from GPS while waiting for Satellite signal lock
+** LED is on solid once output is enabled
+* Fits into Aluminum Project Box Enclosure DIY 100*76*35mm - [https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2334524.m570.l1313&_nkw=100*76*35mm+aluminum&_sacat=0&LH_TitleDesc=0&_odkw=100*76*35mm+Aluminum+PCB+Instrument+Box+Enclosure+Electronic+Project+Case+Set&_id=174408274566 ebay search]
+* Inspired by [http://www.scullcom.uk/design-build-a-gps-locked-frequency-standard-part-4/ Scullcom design]
+
+= Software =
+
+== GPS_001.py ==
+
+* Display 'GSA' sentences from the GPS
+
+== GPS_002.py ==
+
+* Read 32 bytes at a time
+
+== GPS_003.py ==
+
+* Capture data from GPS module a line at a time - helpful for debugging
+
+== GPS_004.py ==
+
+* Working code
+* Hard-coded to wait for lock and set freq to 10 MHz
+* Blinks LED to show status
