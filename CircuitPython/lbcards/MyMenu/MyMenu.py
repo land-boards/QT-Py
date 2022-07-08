@@ -1,5 +1,6 @@
 # MyMenu_SWs.py
 # Read 5 jumpers, write 3 LEDs
+# Print to screen
 #
 # Wiki page
 #    http://land-boards.com/blwiki/index.php?title=MyMenu
