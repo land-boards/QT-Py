@@ -1,0 +1,32 @@
+{| class="wikitable"
+! QTPy49
+! GPIO
+|-
+| A0
+| GP26
+|-
+| A1
+| GP27
+|-
+| A2
+| GP28
+|-
+| A3
+| GP29
+|-
+| I2C_SDA
+| GP6
+|-
+| I2C_SCL
+| GP7
+|-
+| RX
+| GP1
+|-
+| TX
+| GP0
+|-
+| RGB
+| GP25
+|-
+|}

@@ -1,0 +1,44 @@
+{| class="wikitable"
+! Signal
+! SD_CARD_X49
+! QTPy conn
+! QTPy GP
+! PiPico Pin
+|-
+| SPI_SCLK
+| J1-3
+| J3-6
+| GP2
+| GPIO2
+|-
+| SPI_MOSI
+| J1-4
+| J3-4
+| GP3
+| GPIO3
+|-
+| SPI_MISO
+| J1-2
+| J3-5
+| GP4
+| GPIO4
+|-
+| SPI_SS
+| J1-5
+| J9-3
+| GP26
+| GPIO26
+|-
+| GND
+| J1-1
+| J9-1
+| 
+| 
+|-
+| VCC
+| J1-7
+| J9-2
+| 
+| 
+|-
+|}
