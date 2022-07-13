@@ -12,7 +12,6 @@
 '   PROTO16-I2C
 '     http://land-boards.com/blwiki/index.php?title=PROTO16-I2C
 '
-'
 ' MCP23017 Datasheet
 '   https://ww1.microchip.com/downloads/en/devicedoc/20001952c.pdf
 '
