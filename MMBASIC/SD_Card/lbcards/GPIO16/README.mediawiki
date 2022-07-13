@@ -1,0 +1,18 @@
+= External MCP23017 16-bit Port Expander Examples =
+
+== GPIO16-02.bas ==
+
+* [https://github.com/land-boards/RasPiPico/blob/main/PicoMite_MMBASIC/PicoMite_VGA/Land%20Boards%20BASIC%20Programs/lbcards/GPIO16/GPIO16-02.bas GPIO16-02.bas]
+** Light all of the output pins one at a time
+** Alternate patterns then bounce a LED
+** External MCP23017 cards such as
+*** [http://land-boards.com/blwiki/index.php?title=PROTO16-I2C PROTO16-I2C] built with 16 LEDs
+*** [http://land-boards.com/blwiki/index.php?title=SWLEDX8-I2C SWLEDX8-I2C] = (8) Switches, (8) LEDs, I2C interface
+
+== I2CIO16-DB25.bas ==
+
+* [https://github.com/land-boards/RasPiPico/blob/main/PicoMite_MMBASIC/PicoMite_VGA/Land%20Boards%20BASIC%20Programs/lbcards/GPIO16/I2CIO16-DB25.bas I2CIO16-DB25.bas]
+** Light all of the output pins one at a time
+** Alternate patterns then bounce a LED
+** Attached to [http://land-boards.com/blwiki/index.php?title=I2CIO16-DB25 I2CIO16-DB25] card
+*** Attached to [http://land-boards.com/blwiki/index.php?title=LED-32 LED-32] card
