@@ -2,22 +2,11 @@
 
 <img src="http://land-boards.com/blwiki/images/5/53/DIGIO32-I2C-P232-720px.jpg"></img>
 
-== DIGIO32I2C-01.bas Code ==
+== DIGIO32I2C-QTPy.bas Code ==
 
-* [https://github.com/land-boards/RasPiPico/blob/main/PicoMite_MMBASIC/PicoMite_VGA/Land%20Boards%20BASIC%20Programs/lbcards/GPIO32/DIGIO32I2C-01.bas DIGIO32I2C-01.bas]
+* [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/SD_Card/lbcards/GPIO32/DIGIO32I2C-QTPy.bas DIGIO32I2C-QTPy.bas]
 ** Test the (2) MCP23017 parts on the external [http://land-boards.com/blwiki/index.php?title=DIGIO32-I2C DIGIO32-I2C] card
 ** Can also be used with the [http://land-boards.com/blwiki/index.php?title=PROTO16-I2C PROTO16-I2C] card
 ** Light all of the output pins one at a time
 ** Alternate patterns then bounce a LED
 *** [http://land-boards.com/blwiki/index.php?title=DIGIO32-I2C DIGIO32-I2C] card gets attached to [http://land-boards.com/blwiki/index.php?title=LED-32 LED-32] card
-
-== DIGIO32I2C-02.bas Code ==
-
-* [https://github.com/land-boards/RasPiPico/blob/main/PicoMite_MMBASIC/PicoMite_VGA/Land%20Boards%20BASIC%20Programs/lbcards/GPIO32/DIGIO32I2C-02.bas DIGIO32I2C-02.bas] 
-** Loops pins from internal 32-bit Digio to the external [http://land-boards.com/blwiki/index.php?title=DIGIO32-I2C DIGIO32-I2C] card
-** Tests as 32-bit writes/reads
-** Tests from both sides
-** I2C is the UUT
-*** UUT_I2CADR0, UUT_I2CADR1
-** I2C2 is the Test Station
-*** TEST_STN_I2CADR0, TEST_STN_I2CADR1
