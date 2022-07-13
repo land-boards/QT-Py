@@ -1,4 +1,4 @@
-= Example Code for Raspberry Pi Pico VGA =
+= Example Code for QTPy49 Card =
 
 Exercise/test Land Boards cards using MMBASIC.
 
