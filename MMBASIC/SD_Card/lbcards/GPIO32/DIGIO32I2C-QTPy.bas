@@ -1,4 +1,4 @@
-' DIGIO32I2C-QTPy.bas - Test external DIGIO32I2C
+' DIGIO32I2C-QTPy.bas - Test external DIGIO32-I2C
 ' Test the (2) MCP23017 parts on the DIGIO32-I2C2 card
 ' Light all of the output pins one at a time
 ' Alternate patterns then bounce a LED
@@ -54,17 +54,19 @@ Print "Hit a key to stop"
 SetPin GP6, GP7, I2C2
 I2C2 OPEN 400, 100
 
-delayTime = 500
+delayTime = 250
 
 MCP23017_I2CADR0   = 0
 MCP23017_I2CADR1   = 0
 
 Dim buf(1)
 For i2cAddr = &H20 To &H27
-I2C2 read i2cAddrs
-If (MM.I2C2 = 0) And (MCP23017_I2CADR0 <> 0) Then MCP23017_I2CADR1 = i2cAddr
-If (MM.I2C2 = 0) And (MCP23017_I2CADR0 = 0) Then MCP23017_I2CADR0 = i2cAddr
+I2C2 READ i2cAddr, 0, 1, buf()
+'If (MM.I2C = 0) Then Print i2cAddr
+If (MM.I2C = 0) And (MCP23017_I2CADR0 <> 0) Then MCP23017_I2CADR1 = i2cAddr
+If (MM.I2C = 0) And (MCP23017_I2CADR0 = 0) Then MCP23017_I2CADR0 = i2cAddr
 Next i2cAddr
+'Print MCP23017_I2CADR0; MCP23017_I2CADR1
 If (MCP23017_I2CADR0 <> 0) And (MCP23017_I2CADR1<>0) GoTo setupMCP
 Print "Did not find 2 MCP parts"
 
