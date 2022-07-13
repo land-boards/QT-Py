@@ -3,7 +3,8 @@
 == PROTO16_LEDs.bas ==
 
 * [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/SD_Card/lbcards/GPIO16/PROTO16_LEDs.bas PROTO16_LEDs.bas]
-
+** Light all of the output pins one at a time
+** Alternate patterns then bounce a LED
 
 == GPIO16-02.bas ==
 
