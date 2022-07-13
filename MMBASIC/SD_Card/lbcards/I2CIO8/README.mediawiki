@@ -1,5 +1,7 @@
 = I2CIO8 Card =
 
+<img src="http://land-boards.com/blwiki/images/8/8f/I2CIO-8_X2-6000-720px.jpg"></img>
+
 Programs that exercise the external [http://land-boards.com/blwiki/index.php?title=I2CIO-8 I2CIO-8] card
 
 * [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/SD_Card/lbcards/I2CIO8/I2CIO8-QTPY-4x.bas I2CIO8-QTPY-4x.bas]
