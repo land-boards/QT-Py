@@ -1,1 +1,23 @@
 = SD Card Contents =
+
+== Demos ==
+
+Serial demo programs.
+
+== Games ==
+
+Serial games.
+
+== lbcards ==
+
+Vode that runs on [ Land Boards cards]
+
+== On-Board ==
+
+== performance ==
+
+Performance test code.
+
+== wave ==
+
+Wave (.wav) files.

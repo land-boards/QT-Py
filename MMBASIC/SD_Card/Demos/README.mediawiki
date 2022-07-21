@@ -1,9 +1,4 @@
-= MMBASIC Programs =
-
-== DIGIO32I2C-QTPy.bas ==
-
-* [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/MMBASIC_Programs/DIGIO32I2C-QTPy.bas DIGIO32I2C-QTPy.bas]
-** Works with external DIGIO32-I2C card
+= SD Card Contents =
 
 == OnBoardLEDs.bas ==
 
