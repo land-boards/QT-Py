@@ -1,5 +1,7 @@
 = SD Card Contents =
 
+MMBASIC software that runs on the card.
+
 == Demos ==
 
 Serial demo programs.
