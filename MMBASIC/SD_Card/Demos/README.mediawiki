@@ -1,15 +1,5 @@
 = SD Card Contents =
 
-== OnBoardLEDs.bas ==
-
-* [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/MMBASIC_Programs/OnBoardLEDs.bas OnBoardLEDs.bas]
-** Blink Grren LED on the card
-
-== SerCom.bas ==
-
-* [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/MMBASIC_Programs/SerCom.bas SerCom.bas]
-** Use the serial connection as a COM port
-
 == hello3.bas ==
 
 * [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/MMBASIC_Programs/hello3.bas hello3.bas]
