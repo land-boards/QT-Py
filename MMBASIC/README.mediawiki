@@ -16,15 +16,15 @@ Peter Mather led the project, ported the MMBasic interpreter to the Raspberry Pi
 = Hardware =
 
 * [https://www.seeedstudio.com/xiao-rp2040-v1-0-p-5026.html Seeed Studio XIAO RP2040]
-* [[QTPy49|QTPy49 breakout card]]
-* [[SD CARD X49|SD Adaper card]]
-* [[DTE|RS-232 serial card]] (optional)
+* [http://land-boards.com/blwiki/index.php?title=QTPy49 QTPy49 breakout card]
+* [http://land-boards.com/blwiki/index.php?title=SD_CARD_X49 SD CARD X49]
+* [http://land-boards.com/blwiki/index.php?title=DTE DTE RS-232 serial card] (optional)
 
 == Seeed Studio XIAO RP2040 ==
 
-[[file:XIAO-RP2040.PNG]]
+<img src="http://land-boards.com/blwiki/images/3/38/XIAO-RP2040.PNG"></img>
 
-[[QT_Py_(RP2040_based)]] Wiki page
+[http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based) QT Py (RP2040_based)]] Wiki page
 
 * Two manufacturers
 ** [https://www.adafruit.com/product/4900 Adafruit QT Py RP2040 Product page]
@@ -52,9 +52,9 @@ Peter Mather led the project, ported the MMBasic interpreter to the Raspberry Pi
 
 == QTPy49 breakout card ==
 
-[[file:QTPy49_P18254-720px.jpg]]
+<img src="http://land-boards.com/blwiki/images/c/ca/QTPy49_P18254-720px.jpg"></img>
 
-[[QTPy49]] Wiki page
+[http://land-boards.com/blwiki/index.php?title=QTPy49 QTPy49 Wiki page]
 
 * [[QT Py (RP2040 based)]] CPU choices are
 ** [https://www.adafruit.com/product/4900 Adafruit QT Py RP2040 Product page]
@@ -79,9 +79,9 @@ Peter Mather led the project, ported the MMBasic interpreter to the Raspberry Pi
 
 == SD Card ==
 
-[[file:SDCARDX49_P935_cropped-512px.jpg]]
+<img src="http://land-boards.com/blwiki/images/e/ea/SDCARDX49_P935_cropped-512px.jpg"></img>
 
-[[SD_CARD_X49]] wiki page
+[http://land-boards.com/blwiki/index.php?title=SD_CARD_X49 SD CARD X49 wiki page]
 
 * SD or SDHC card adapter
 * 5V to 3.3V regulator
@@ -92,7 +92,7 @@ Peter Mather led the project, ported the MMBasic interpreter to the Raspberry Pi
 
 === SD Card Wiring ===
 
-* [[SD_CARD_X49]] card
+[http://land-boards.com/blwiki/index.php?title=SD_CARD_X49 SD CARD X49] card
 ** NO5V jumper installed
 
 {| class="wikitable"
@@ -167,9 +167,9 @@ A:/
 
 == RS-232 (option) ==
 
-[[file:DTE_P562-720px.jpg]]
+<img src="http://land-boards.com/blwiki/images/1/1a/DTE_P562-720px.jpg"></img>
 
-[[DTE]] wiki page
+[http://land-boards.com/blwiki/index.php?title=DTE DTE wiki page]
 
 * TTL to RS-232 converter
 * Male DB-9 connector
@@ -203,7 +203,7 @@ print #5, :Hello"
 
 === RS-232 Wiring ===
 
-* Wiring to [[DTE]] card
+* Wiring to [http://land-boards.com/blwiki/index.php?title=DTE DTE wiki page] card
 
 {| class="wikitable"
 ! DTE signal
@@ -245,8 +245,3 @@ print #5, :Hello"
 
 * Wiring to [[FTDI-49MM]] card
 ** Swap TX/RX pins
-
-== MMBASIC Card Stack-up ==
-
-[[file:QTPY49_MMBASIC_P18420-720pxV.jpg]]
-
