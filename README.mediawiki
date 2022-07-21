@@ -16,8 +16,7 @@
 
 = Software =
 
-* [https://github.com/land-boards/lb-Arduino-Code/tree/master/LBCards/QTPy49 Arduino code]
-* [https://github.com/land-boards/QT-Py/tree/main/CircuitPython CircuitPython code]
-** CircuitPython and MicroPython Software demos and applications for QT Py or XIAO cards
-* [https://github.com/land-boards/QT-Py/tree/main/MicroPython MicroPython code]
-* [https://github.com/land-boards/QT-Py/tree/main/MMBASIC MMBASIC code]
+* [https://github.com/land-boards/lb-Arduino-Code/tree/master/LBCards/QTPy49 Arduino code] for QT Py or XIAO cards
+* [https://github.com/land-boards/QT-Py/tree/main/CircuitPython CircuitPython code] for QT Py or XIAO cards
+* [https://github.com/land-boards/QT-Py/tree/main/MicroPython MicroPython code] for QT Py or XIAO cards
+* [https://github.com/land-boards/QT-Py/tree/main/MMBASIC MMBASIC code] for QT Py or XIAO RP2040 cards
