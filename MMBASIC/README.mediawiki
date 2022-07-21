@@ -1,1 +1,252 @@
 <img src="https://raw.githubusercontent.com/land-boards/QT-Py/main/MMBASIC/Pics/QTPY49_MMBASIC_P18420-720pxV.jpg"></img>
+
+[http://land-boards.com/blwiki/index.php?title=MMBASIC_on_XIAO_RP2040 Wiki page]
+
+= Overview =
+
+* Card set running [https://geoffg.net/picomite.html BASIC Interpreter for the Raspberry Pi Pico] on [https://www.seeedstudio.com/xiao-rp2040-v1-0-p-5026.html Seeed Studio XIAO RP2040]
+* MMBasic is a Microsoft BASIC compatible implementation of the BASIC language with floating point, integer and string variables, arrays, long variable names, a built in program editor and many other features
+* 8 Flash locations for storage.
+* Support for SD Card
+
+== MMBASIC Credits ==
+
+Peter Mather led the project, ported the MMBasic interpreter to the Raspberry Pi Pico and wrote the hardware device drivers. Geoff Graham wrote the MMBasic interpreter and the manual.  Mick Ames wrote the PIO compiler and its corresponding documentation.
+
+= Hardware =
+
+* [https://www.seeedstudio.com/xiao-rp2040-v1-0-p-5026.html Seeed Studio XIAO RP2040]
+* [[QTPy49|QTPy49 breakout card]]
+* [[SD CARD X49|SD Adaper card]]
+* [[DTE|RS-232 serial card]] (optional)
+
+== Seeed Studio XIAO RP2040 ==
+
+[[file:XIAO-RP2040.PNG]]
+
+[[QT_Py_(RP2040_based)]] Wiki page
+
+* Two manufacturers
+** [https://www.adafruit.com/product/4900 Adafruit QT Py RP2040 Product page]
+** [https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html Seeed XIAO RP2040 Product page]
+* USB Type C connector
+* RP2040 32-bit Cortex M0+ dual-core
+* Runs at ~125 MHz
+* 264 KB RAM
+* SPI FLASH chip for storing files and CircuitPython/MicroPython code storage
+** 8 MB - Adafruit
+** 2 MB - Seeedstudio
+* No EEPROM
+* Can be used with C/C++ (Arduino), MicroPython, or CircuitPython
+* Built-in RGB NeoPixel LED
+* 13 GPIO pins (11 breakout pads and two QT pads):
+** Four 12 bit ADCs (one more than Pico)
+** I2C port
+*** 2 I2C: 1 on QT pins, one on the (Adafruit) breakout pads - Adafruit
+*** 1 I2C on XAIO 
+** SPI and UART peripherals, in standard QT Py locations,
+** PWM outputs on every IO pin - for servos, LEDs, etc
+** There are 6 GPIO in consecutive order for PIO compatibility
+* 3.3V logic and power 600 mA
+* Both Reset button and Bootloader select buttons for quick restarts (no unplugging-replugging to relaunch code)
+
+== QTPy49 breakout card ==
+
+[[file:QTPy49_P18254-720px.jpg]]
+
+[[QTPy49]] Wiki page
+
+* [[QT Py (RP2040 based)]] CPU choices are
+** [https://www.adafruit.com/product/4900 Adafruit QT Py RP2040 Product page]
+** [https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html Seeed XIAO RP2040 Product page]
+** 133 MHz
+* Connectors/Headers
+** DC Power
+** AD0 GVS
+** AD1 GVS
+** AD2 GVS
+** AD3 GVS
+** I2C with ground/VCC
+** TX/RX with ground/VCC
+** SPI with ground/VCC
+* QTPy49 can be powered from with either the USB C or DC jack
+** Automatic Schottky diode power switching between
+*** 5V from USB C
+*** 5V on external DC jack
+*** 7-12V on DC jack
+* 49x49mm ODAS form factor
+* (4) 4-40 mounting holes
+
+== SD Card ==
+
+[[file:SDCARDX49_P935_cropped-512px.jpg]]
+
+[[SD_CARD_X49]] wiki page
+
+* SD or SDHC card adapter
+* 5V to 3.3V regulator
+* 3.3V to 5V [https://www.ti.com/lit/ds/symlink/txs0104e.pdf TXS0104E] level shifter
+* Activity LED
+* 49 x 49 mm ODAS foprm factor
+* (4) 4-40 mounting holes
+
+=== SD Card Wiring ===
+
+* [[SD_CARD_X49]] card
+** NO5V jumper installed
+
+{| class="wikitable"
+! Signal
+! SD_CARD_X49
+! QTPy49 conn
+! QTPy GP
+! PiPico Pin
+|-
+| SPI_SCLK
+| J1-3
+| J3-6
+| GP2
+| GPIO2
+|-
+| SPI_MOSI
+| J1-4
+| J3-4
+| GP3
+| GPIO3
+|-
+| SPI_MISO
+| J1-2
+| J3-5
+| GP4
+| GPIO4
+|-
+| SPI_SS
+| J1-5
+| J9-3
+| GP26
+| GPIO26
+|-
+| GND
+| J1-1
+| J9-1
+| GND
+| GND
+|-
+| VCC (3.3V)
+| J1-7
+| J9-2
+| VCC
+| VCC
+|-
+|}
+
+=== SD Configuration ===
+
+<PRE>
+OPTION SYSTEM SPI GP2, GP3, GP4
+OPTION SDCARD GP26
+OPTION COLOURCODE ON
+
+</PRE>
+
+* Verify it is working
+
+<PRE>
+> FILES
+A:/
+   <DIR>  basic
+   <DIR>  bmps
+   <DIR>  demos
+   <DIR>  games
+   <DIR>  jpegs
+   <DIR>  lbcards
+   <DIR>  performance
+   <DIR>  wave
+8 directories, 0 files
+</PRE>
+
+== RS-232 (option) ==
+
+[[file:DTE_P562-720px.jpg]]
+
+[[DTE]] wiki page
+
+* TTL to RS-232 converter
+* Male DB-9 connector
+* FTDI pinout (reversed directions to directly connect to FTDI Interface)
+* 49x49mm card
+* 4x 4-40 holes
+* [[DTE]] card
+* Command to use serial as console
+** 115,200 baud = default
+
+<PRE>
+OPTION SERIAL CONSOLE GP0, GP1
+
+</PRE>
+
+* Command to use serial as console switch back from the serial port to the USB on the XIAO RP2040
+
+<PRE>
+option serial console disable
+
+</PRE>
+
+* Command to use serial as COM port
+
+<PRE>
+setpin gp1,gp0, com1
+open "com1:9600" as #5
+print #5, :Hello"
+
+</PRE>
+
+=== RS-232 Wiring ===
+
+* Wiring to [[DTE]] card
+
+{| class="wikitable"
+! DTE signal
+! DTE pin
+! QTPy GP
+! PiPico Pin
+|-
+| GND
+| H1-1
+| GND
+| J4-1
+|-
+| CTS
+| H1-2
+| N/C
+| N/C
+|-
+| VCC
+| H1-3
+| VCC
+| J4-2
+|-
+| TX
+| H1-4
+| TX_D6
+| J4-3
+|-
+| RX
+| H1-5
+| RX_D7
+| J4-4
+|-
+| RTS
+| H1-6
+| N/C
+| N/C
+|-
+|}
+
+* Wiring to [[FTDI-49MM]] card
+** Swap TX/RX pins
+
+== MMBASIC Card Stack-up ==
+
+[[file:QTPY49_MMBASIC_P18420-720pxV.jpg]]
+
