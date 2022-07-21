@@ -9,8 +9,3 @@
 
 * [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/MMBASIC_Programs/SerCom.bas SerCom.bas]
 ** Use the serial connection as a COM port
-
-== hello3.bas ==
-
-* [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/MMBASIC_Programs/hello3.bas hello3.bas]
-* Print Hello, World! 1000 times
