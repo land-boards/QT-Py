@@ -18,3 +18,10 @@
 * [https://www.adafruit.com/product/4600 Adafruit QT Py SAMD21 Product Page]
 * [https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html Seeed XIAO RP2040 Product page]
 * [https://www.seeedstudio.com/Seeeduino-XIAO-Arduino-Microcontroller-SAMD21-Cortex-M0+-p-4426.html Seeeduino XIAO Product page]
+
+= Software =
+
+* [https://github.com/land-boards/lb-Arduino-Code/tree/master/LBCards/QTPy49 Arduino code]
+* [https://github.com/land-boards/QT-Py/tree/main/CircuitPython CircuitPython]
+* [https://github.com/land-boards/QT-Py/tree/main/MicroPython MicroPython]
+* [https://github.com/land-boards/QT-Py/tree/main/MMBASIC MMBASIC]
