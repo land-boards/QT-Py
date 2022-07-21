@@ -3,7 +3,7 @@
 == OnBoardLEDs.bas ==
 
 * [https://github.com/land-boards/QT-Py/blob/main/MMBASIC/MMBASIC_Programs/OnBoardLEDs.bas OnBoardLEDs.bas]
-** Blink Grren LED on the card
+** Blink Green LED on the card
 
 == SerCom.bas ==
 
