@@ -12,7 +12,7 @@ Serial games.
 
 == lbcards ==
 
-Vode that runs on [ Land Boards cards]
+Code that runs on [http://land-boards.com/blwiki/index.php?title=Main_Page Land Boards cards]
 
 == On-Board ==
 
