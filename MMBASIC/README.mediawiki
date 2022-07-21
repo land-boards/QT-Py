@@ -243,5 +243,5 @@ print #5, :Hello"
 |-
 |}
 
-* Wiring to [[FTDI-49MM]] card
+* Wiring to [http://land-boards.com/blwiki/index.php?title=FTDI-49MM FTDI-49MM card]
 ** Swap TX/RX pins
