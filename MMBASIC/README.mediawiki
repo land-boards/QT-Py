@@ -4,7 +4,7 @@
 
 = Overview =
 
-* Card set running [https://geoffg.net/picomite.html BASIC Interpreter for the Raspberry Pi Pico] on [https://www.seeedstudio.com/xiao-rp2040-v1-0-p-5026.html Seeed Studio XIAO RP2040]
+* Card set running [https://geoffg.net/picomite.html MMASIC Interpreter for the Raspberry Pi Pico] on [https://www.seeedstudio.com/xiao-rp2040-v1-0-p-5026.html Seeed Studio XIAO RP2040]
 * MMBasic is a Microsoft BASIC compatible implementation of the BASIC language with floating point, integer and string variables, arrays, long variable names, a built in program editor and many other features
 * 8 Flash locations for storage.
 * Support for SD Card
