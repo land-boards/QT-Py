@@ -1,6 +1,7 @@
 # PulseGen_DRIVE50_Test.py
-# Test PulseGen card
+# Test PulseGen and DRIVE50 cards
 # http://land-boards.com/blwiki/index.php?title=PulseGen
+# http://land-boards.com/blwiki/index.php?title=DRIVE50
 #
 # Reads PulseGen output as analog value
 # Test with/without 50 ohm terminator
