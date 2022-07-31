@@ -7,6 +7,9 @@
 # Test with/without 50 ohm terminator
 # Should be ~1/2 of 3.3V when terminator is installed
 #
+# Uses Digital Output to drive DRIVE50 card
+# Check for terminator
+#
 # On QTPy49 breakout card
 # http://land-boards.com/blwiki/index.php?title=QTPy49
 # Runs on XIAO RP2040 board
