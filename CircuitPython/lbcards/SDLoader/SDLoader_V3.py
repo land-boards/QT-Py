@@ -202,15 +202,30 @@ def writeFile():
     with open("/sd/test.txt", "w") as f:
         f.write("Hello world!\r\n")
 
-# readPrintFileLines() Dump file to USB serial
-def readPrintFileLines(pathFileName):
+# dumpFileToSerial() Dump file to UART
+def dumpFileToSerial(pathFileName):
     global uart
+    global handShake
+    if handShake == EchoHandshake:
+        while uart.read(1) != None:
+            pass
     with open(pathFileName, "r") as f:
         for line in f:
+            for txChar in line:
+                uart.write(bytes(txChar, 'utf-8'))
+                if handShake == EchoHandshake:
+                    gotChar = False
+                    while not gotChar:
+                        byteRead = uart.read(1)
+                        if byteRead!= None:
+                            gotChar = True
+#                     if byteRead != bytes(txChar, 'utf-8'):
+#                         return False
             if serialDebug:
                 print(line, end='')
-            uart.write(bytes(line, 'utf-8'))
+#            uart.write(bytes(line, 'utf-8'))
             uart.write(bytes('\r', 'utf-8'))
+    return True
 
 # getListOfFolders - recursively got all paths and put into listOfFolders list
 def getListOfFolders(path):
@@ -553,8 +568,10 @@ def uploadSerial():
     printToOLED(display,0,0,"Uploading Serial")
     printToOLED(display,0,1,pathFileName)
     updateOLEDDisplay()
-    readPrintFileLines(pathFileName)
-    printToOLED(display,0,2,"Upload is Done!")
+    if not dumpFileToSerial(pathFileName):
+        printToOLED(display,0,2,"Transfer Error")
+    else:
+        printToOLED(display,0,2,"Upload is Done!")
     updateOLEDDisplay()
     time.sleep(2)
     return
