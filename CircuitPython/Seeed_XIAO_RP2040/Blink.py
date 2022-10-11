@@ -1,13 +1,19 @@
-"""Example for XIAO SAM and RP2040 boards. Blinks the built-in LED."""
+"""Example for XIAO SAM and RP2040 boards. Blinks the built-in gate."""
 import time
 import board
 import digitalio
  
-led = digitalio.DigitalInOut(board.LED)
-led.direction = digitalio.Direction.OUTPUT
+gate = digitalio.DigitalInOut(board.D3)
+gate.direction = digitalio.Direction.OUTPUT
+clk = digitalio.DigitalInOut(board.D4)
+clk.direction = digitalio.Direction.OUTPUT
  
 while True:
-    led.value = False   # low to turn on
-    time.sleep(1.5)
-    led.value = True    # high to turn off
+    gate.value = False    # high to turn off
     time.sleep(0.5)
+    gate.value = True   # low to turn on
+    time.sleep(0.5)
+    clk.value = False    # high to turn off
+    time.sleep(1.5)
+    clk.value = True    # high to turn off
+    time.sleep(1.5)
