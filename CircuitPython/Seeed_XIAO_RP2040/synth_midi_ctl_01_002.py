@@ -1,13 +1,16 @@
 # synth_midi_ctl_01_002.py
 
 """
-Based on midi_inoutdemo.py from
+HAGIWO Arduino code
+    https://github.com/land-boards/lb-Arduino-Code/blob/master/LBCards/SYNTHS/SYNTHMIDICTL01/SYNTHMIDICTL01.ino
+CircuitPython MIDI code - midi_inoutdemo.py from
 \circuitpythonBundles\adafruit-circuitpython-bundle-7.x-mpy-20220611\examples
 Runs on board
     http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01
 XIAO RP2040 CPU
     http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based)#Seeeduino_XIAO_RP2040
 Adafruit MIDI handler
+    https://docs.circuitpython.org/projects/midi/en/latest/index.html
 Starts out with USB MIDI
 Use MIDI Editor to send out music over USB
     https://midieditor.org/
