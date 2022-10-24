@@ -65,21 +65,35 @@ def setGate(gateVal):
     else:
         GATE.value = True
 
+Note0V = 43  # WAS 36 - Adjusted to match the 
+Note5V = Note0V + 60  # 5 octaves = 50 semi-s
+
 def handleFirstNoteOn(note,velocity):
-    print("First Note On =",note,", velocity",velocity,end='')
+    # No standard values for key to CV
+    # C2 = 0V in many VCOs (Note 36)
+    # Ex: https://doepfer.de/a110.htm
+    # C3 = 1V (Note 48)
+    # C4 = 2V (Note 60 in MIDIEditor)
+    # C5 = 3V(Note 72
+    # C6 = 4V (Note 84)
+    # C7 = 5V (Mote 96)
+    print("First Note On =",note,end='')
+    print(" velocity",velocity,end='')
     setGate(True)
-    if note < 21:  # Lowest note = 21
+    if note < Note0V:  # Lowest note
         notePitchCV = 0
-    elif note > 82: # Highest note is 82 (can't test since MIDIEditor only goes up to note 71)
-        notePitchCV = 82
+    elif note > Note5V: # Highest note is 82 (can't test since MIDIEditor only goes up to note 71)
+        notePitchCV = Note5V
     else:
-        notePitchCV = noteToCVTable[note-21]
-    print(", Note CV =",notePitchCV)
+        notePitchCV = noteToCVTable[note-Note0V]
+    print(", Note CV =",notePitchCV,end='')
+    voltsVal = (5.0 * notePitchCV) / 4096.0
+    print(", volts", voltsVal)
     writeCVD2A(0x3000 + notePitchCV)
     pass
 
 def handleFirstNoteOff(note):
-    print("First Note Off =",note)
+#     print("First Note Off =",note)
     setGate(False)
     writeCVD2A(0x3000)
     pass
@@ -111,7 +125,7 @@ def setMidiClk(clkValue):
         CLK.value = True   # high to turn off
 
 def handleMidiClk():
-    print("Clock Message")
+#     print("Clock Message")
     MIDIClkDivisor = getMIDIClkRate()
     if clockCount >= MIDIClkDivisor:
        clockCount = 0
@@ -123,7 +137,7 @@ def handleMidiClk():
 def handleControlChange(control, value):
     # https://www.midi.org/specifications-old/item/table-3-control-change-messages-data-bytes-2
     if control == 121:
-        print("ControlChange: Reset All Controllers")
+#         print("ControlChange: Reset All Controllers")
         noteOnFlag = False
         writeCVD2A(0)
     elif control == 64:
@@ -190,10 +204,6 @@ spi = busio.SPI(board.SCK, MOSI=board.MOSI)
 lddac = digitalio.DigitalInOut(board.D5)
 lddac.direction = digitalio.Direction.OUTPUT
 lddac.value = True
-
-# while True:
-#     print("CV ramp")
-#     writeCVVals()
 
 #  midi setup
 #  USB is setup as the input
