@@ -1,5 +1,7 @@
 <img src="http://land-boards.com/blwiki/images/5/5f/SYNTH-MIDI_CTL-01_REV1_FRONT_3D.png"></img>
 
+= Python Code =
+
 Python code for [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01] card
 
 = SYNTH-MIDI-CTL-01 Features =
