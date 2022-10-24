@@ -1,6 +1,6 @@
 <img src="http://land-boards.com/blwiki/images/5/5f/SYNTH-MIDI_CTL-01_REV1_FRONT_3D.png"></img>
 
-Python code for [http://land-boards.com/blwiki/index.php?title=ER-VCO-03] and [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01] cards
+Python code for [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01] card
 
 = SYNTH-MIDI-CTL-01 Features =
 
