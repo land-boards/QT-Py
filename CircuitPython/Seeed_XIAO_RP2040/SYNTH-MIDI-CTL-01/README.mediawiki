@@ -11,6 +11,7 @@ Python code for [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01
 * [http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based) XAIO RP2040 CPU]
 ** Arduino MIDI library has '''not''' yet been ported to Pico so will need to use CircuitPython
 * MIDI In/Out
+* USB MIDI
 ** Standard MIDI Jacks
 ** MIDI out jack for future functionality
 * (2) 0-5V Analog CV outs
