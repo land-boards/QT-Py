@@ -31,5 +31,3 @@ Python code for [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01
 ** Probably too deep, needs cabling
 * (6) 6-32 Mounting holes
 ** Stacks with [http://land-boards.com/blwiki/index.php?title=SYNTH-VCO-01 SYNTH-VCO-01] card
-
-= ER-VCO-03 Features =
