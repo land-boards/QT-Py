@@ -2,7 +2,7 @@
 
 = Python Code =
 
-Python code for [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01] card
+Python code for [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01 SYNTH-MIDI-CTL-01] card
 
 = SYNTH-MIDI-CTL-01 Features =
 
