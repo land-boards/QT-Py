@@ -17,7 +17,7 @@ Python code for [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01
 * (2) 0-5V Analog CV outs
 ** [https://www.mouser.com/ProductDetail/Microchip-Technology-Atmel/MCP4822-E-P?qs=sGAEpiMZZMtgJDuTUz7Xu5a0A%252BlHhkxt3QSpqvc4zyk%3D MCP4822 12-bit D/A] - SPI Interface
 *** [https://www.mouser.com/datasheet/2/268/21953a-8929.pdf MCP4822 Datasheet]
-** Use with [[SYNTH-VCO-01]]
+** Use with [http://land-boards.com/blwiki/index.php?title=SYNTH-VCO-01 SYNTH-VCO-01]
 *** CV1 = V/OCT
 *** CV2 = MOD
 * (2) Digital Outs, eX:
@@ -30,6 +30,6 @@ Python code for [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01
 * Card is '''not''' a Eurorack card
 ** Probably too deep, needs cabling
 * (6) 6-32 Mounting holes
-** Stacks with [[SYNTH-VCO-01]] card
+** Stacks with [http://land-boards.com/blwiki/index.php?title=SYNTH-VCO-01 SYNTH-VCO-01] card
 
 = ER-VCO-03 Features =
