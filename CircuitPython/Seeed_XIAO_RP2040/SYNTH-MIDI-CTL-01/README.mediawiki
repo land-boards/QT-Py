@@ -1,3 +1,32 @@
 <img src="http://land-boards.com/blwiki/images/5/5f/SYNTH-MIDI_CTL-01_REV1_FRONT_3D.png"></img>
 
 Python code for [http://land-boards.com/blwiki/index.php?title=ER-VCO-03] and [http://land-boards.com/blwiki/index.php?title=SYNTH-MIDI-CTL-01] cards
+
+= SYNTH-MIDI-CTL-01 Features =
+
+* Adapted from [https://note.com/solder_state/n/n17e028497eba HAGIWO's MIDI to CV module]
+** Translate from Japanese to English using browser
+* [http://land-boards.com/blwiki/index.php?title=QT_Py_(RP2040_based) XAIO RP2040 CPU]
+** Arduino MIDI library has '''not''' yet been ported to Pico so will need to use CircuitPython
+* MIDI In/Out
+** Standard MIDI Jacks
+** MIDI out jack for future functionality
+* (2) 0-5V Analog CV outs
+** [https://www.mouser.com/ProductDetail/Microchip-Technology-Atmel/MCP4822-E-P?qs=sGAEpiMZZMtgJDuTUz7Xu5a0A%252BlHhkxt3QSpqvc4zyk%3D MCP4822 12-bit D/A] - SPI Interface
+*** [https://www.mouser.com/datasheet/2/268/21953a-8929.pdf MCP4822 Datasheet]
+** Use with [[SYNTH-VCO-01]]
+*** CV1 = V/OCT
+*** CV2 = MOD
+* (2) Digital Outs, eX:
+** Gate
+** Clock
+* Pot supports setting Clock rate
+* Standard EuroRack 16 pin header
+** Supports 12V in with on-board 5V regulator
+** 5V regulator can be not installed if 5V is available on EuroRack connection
+* Card is '''not''' a Eurorack card
+** Probably too deep, needs cabling
+* (6) 6-32 Mounting holes
+** Stacks with [[SYNTH-VCO-01]] card
+
+= ER-VCO-03 Features =
