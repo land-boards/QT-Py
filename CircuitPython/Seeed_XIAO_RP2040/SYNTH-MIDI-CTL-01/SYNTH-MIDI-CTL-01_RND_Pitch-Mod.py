@@ -63,6 +63,7 @@ from adafruit_midi.pitch_bend import PitchBend
 from adafruit_midi.note_off import NoteOff
 from adafruit_midi.note_on import NoteOn
 from adafruit_midi.program_change import ProgramChange
+import math
 
 import random
 
@@ -176,11 +177,12 @@ def writeCVD2A(outval):
     # print("outval",outval)
     # Lock the bus
     #print("Check lock")
+    writeBytes = bytes([((outval >> 8) & 0xff), outval & 0xFF])
     while not spi.try_lock():
         pass
     spi.configure(baudrate=5000000, phase=0, polarity=0)
     cs.value = False
-    spi.write(bytes([((outval >> 8) & 0xff), outval & 0xFF]))
+    spi.write(writeBytes)
     cs.value = True
     # Need to unlock bus when done
     spi.unlock()
@@ -244,18 +246,64 @@ CLK.value = False    # low to turn on
 time.sleep(1)
 CLK.value = True   # high to turn off
 
+# Turn pot from values of ~0 to ~65536 into log values from ~0 to ~15
+def normalizePot():
+    clkSpeed = clkSpeedPotVal.value
+#    print("Analog pot val -",clkSpeed,end='')
+    logSpeed = math.log(clkSpeed,2)
+#    print(", log of pot",logSpeed,end='')
+    # Normalize pot
+    logSpeed -= 8.0
+    if logSpeed < 0.0:
+       logSpeed = 0.001
+#    print(", normalized log of pot",logSpeed,end='')
+    microSecDelay = int(1000000.0/logSpeed)
+#    print(", Delay",microSecDelay)
+    return(microSecDelay)
+   
+
 # Send out random pitch and random modulation
-# Rate is variable via pots from 0.1 to 1.1 secs
-# Note rate is Speed Pot is 7 o-clock to 12 o-clock
-# Output muted when Speed Pot is from 12 o-clock to 23 o-clock
+# Rate is variable via pots from 0.1 to 1.5 secs
+# Note rate is Speed Pot is 7 o-clock to 2 o-clock
+# CCW = slowest (~1.5 Hz)
+# Output muted when Speed Pot is from 2 o-clock to 3 o-clock
 # Exit when Speed Pot is 3 o-clock to 5 o-clock
-while clkSpeedPotVal.value < 55000:
-    while clkSpeedPotVal.value < 32768:
-        writeCVD2A(random.randint(600, 4095) + 0x3000) # Pitch
+# Turn pot into log pot so control is smoother
+stateVals = ['start','clocking','muting','exiting']
+state = 'start'
+while clkSpeedPotVal.value < 58000:
+    while clkSpeedPotVal.value < 50000:
+        if state != 'clocking':
+            print("Clocking")
+            state = 'clocking'
+        normalizePot()
+        writeCVD2A(random.randint(0, 4095) + 0x3000) # Pitch
         writeCVD2A(random.randint(0, 4095) + 0xB000)   # Modulation
-        microcontroller.delay_us(100000+clkSpeedPotVal.value*30)
+        setGate(True)
+        microcontroller.delay_us(50000)
+        loopCount = 0
+#        print("Clock Speed Pot =",clkSpeedPotVal.value)
+#        print("Note rate =",1000000.0/((50000-clkSpeedPotVal.value)*30+100000),"notes/secs")
+#        logSpeed = math.log(clkSpeedPotVal.value,2)
+#        print("log of pot",logSpeed)
+#         while loopCount < 30:
+#             spV = normalizePot()
+#             if spV < 0:
+#                 spV = 0
+#             microcontroller.delay_us(spV)
+#             loopCount += 1
+        microcontroller.delay_us(normalizePot())
+        setGate(False)
+        microcontroller.delay_us(50000)  # Gate off for 50 mS between notes
+    if state != 'muting':
+        print('Muted')
+        state = 'muting'
     writeCVD2A(0x3000)
     writeCVD2A(0xB000)
     time.sleep(0.01)
+    # print("Clock Speed Pot =",clkSpeedPotVal.value)
+    normalizePot()
 writeCVD2A(0x3000)
 writeCVD2A(0xB000)
+normalizePot()
+print("Exiting out to Python Shell")
