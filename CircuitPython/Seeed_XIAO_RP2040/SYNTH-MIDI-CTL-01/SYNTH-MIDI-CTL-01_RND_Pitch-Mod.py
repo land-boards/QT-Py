@@ -260,39 +260,28 @@ def normalizePot():
     microSecDelay = int(1000000.0/logSpeed)
 #    print(", Delay",microSecDelay)
     return(microSecDelay)
-   
 
 # Send out random pitch and random modulation
-# Rate is variable via pots from 0.1 to 1.5 secs
+# Rate is variable via pots from ~2 secs per note to ~10 notes/sec
 # Note rate is Speed Pot is 7 o-clock to 2 o-clock
 # CCW = slowest (~1.5 Hz)
 # Output muted when Speed Pot is from 2 o-clock to 3 o-clock
 # Exit when Speed Pot is 3 o-clock to 5 o-clock
 # Turn pot into log pot so control is smoother
-stateVals = ['start','clocking','muting','exiting']
 state = 'start'
-while clkSpeedPotVal.value < 58000:
-    while clkSpeedPotVal.value < 50000:
+print("Random CV Generator")
+while clkSpeedPotVal.value < 60000:
+    while clkSpeedPotVal.value < 55000:
         if state != 'clocking':
-            print("Clocking")
+            print("Clocking state")
             state = 'clocking'
         normalizePot()
         writeCVD2A(random.randint(0, 4095) + 0x3000) # Pitch
         writeCVD2A(random.randint(0, 4095) + 0xB000)   # Modulation
         setGate(True)
-        microcontroller.delay_us(50000)
         loopCount = 0
-#        print("Clock Speed Pot =",clkSpeedPotVal.value)
-#        print("Note rate =",1000000.0/((50000-clkSpeedPotVal.value)*30+100000),"notes/secs")
-#        logSpeed = math.log(clkSpeedPotVal.value,2)
-#        print("log of pot",logSpeed)
-#         while loopCount < 30:
-#             spV = normalizePot()
-#             if spV < 0:
-#                 spV = 0
-#             microcontroller.delay_us(spV)
-#             loopCount += 1
-        microcontroller.delay_us(normalizePot())
+        for loopCt in range(0,10):
+            microcontroller.delay_us((int)(normalizePot()/10))  # Help pot reaction time
         setGate(False)
         microcontroller.delay_us(50000)  # Gate off for 50 mS between notes
     if state != 'muting':
