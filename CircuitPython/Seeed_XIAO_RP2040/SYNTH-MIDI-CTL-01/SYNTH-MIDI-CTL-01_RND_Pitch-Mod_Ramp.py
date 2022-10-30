@@ -133,7 +133,7 @@ def makeNotesCVDict():
         notesDict[note] = int(4095.0*note/60.0)
 #     print(notesDict)
     return notesDict 
-    
+
 notesDict = makeNotesCVDict()
 # print(notesDict)
 
@@ -148,20 +148,26 @@ state = 'start'
 print("Random CV Generator")
 modRampValue = 0
 noteToPlay = 32
-maxNoteOffset = 7
+maxNoteOffset = 6
 minNoteVal = 16
 maxNoteVal = 48
-# while True:
-while clkSpeedPotVal.value < 60000:
+while True:
+# while clkSpeedPotVal.value < 60000:
     while clkSpeedPotVal.value < 55000:
         if state != 'clocking':
             print("Clocking state")
             state = 'clocking'
         normalizePot()
 #        noteToPlay = random.randint(0,59)
-        noteToPlay = noteToPlay + random.randint(0,maxNoteOffset*2) - maxNoteOffset
-        while (noteToPlay < minNoteVal) or (noteToPlay > maxNoteVal):
-            noteToPlay = noteToPlay + random.randint(0,maxNoteOffset*2) - maxNoteOffset
+        noteToTryToPlay = noteToPlay + random.randint(-maxNoteOffset,maxNoteOffset)
+        stuckCount = 0
+        while (noteToTryToPlay < minNoteVal) or (noteToTryToPlay > maxNoteVal):
+            noteToTryToPlay = noteToPlay + random.randint(-maxNoteOffset,maxNoteOffset)
+            stuckCount += 1
+            if stuckCount > 256:
+                noteToTryToPlay = 32
+                print("Released stuck")
+        noteToPlay = noteToTryToPlay
         noteCV = notesDict[noteToPlay]
         writeCVD2AChannel(0,noteCV) # Pitch
         writeCVD2AChannel(1,modRampValue)   # Modulation
