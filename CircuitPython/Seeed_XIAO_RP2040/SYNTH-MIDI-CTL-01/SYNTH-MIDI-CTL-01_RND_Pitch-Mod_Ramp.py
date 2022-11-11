@@ -177,9 +177,13 @@ while True:
 #             print("Mod value = ",modRampValue)
         if modRampValue & 0x0fff == 0:
             print("Mod value looping")
-        setGate(True)
-        loopCount = 0
+#        setGate(True)
+#        loopCount = 0
         for loopCt in range(0,10):
+            if (loopCt > 0) and (loopCt < 6):
+                setGate(True)
+            else:
+                setGate(False)
             microcontroller.delay_us((int)(normalizePot()/10))  # Help pot reaction time
         setGate(False)
         microcontroller.delay_us(50000)  # Gate off for 50 mS between notes
