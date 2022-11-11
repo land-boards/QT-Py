@@ -95,7 +95,7 @@ def handleFirstNoteOn(note,velocity):
 def handleFirstNoteOff(note):
 #     print("First Note Off =",note)
     setGate(False)
-    writeCVD2A(0x3000)
+#    writeCVD2A(0x3000)
     pass
 
 def getMIDIClkRate():
@@ -154,11 +154,13 @@ def handleControlChange(control, value):
     elif control == 120:
         print("ControlChange: All Sound Off")
         noteOnFlag = False
-        writeCVD2A(0)
+        setGate(False)
+#        writeCVD2A(0)
     elif control == 123:
         print("ControlChange: All Notes Off")
         noteOnFlag = False
-        writeCVD2A(0)
+        setGate(False)
+#        writeCVD2A(0)
     else:
         print("Other Control change - control =", control, ", value =", value)
 
