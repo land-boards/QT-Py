@@ -276,8 +276,8 @@ while True:
             print("Program change, patch =", midi_msg.patch)
         elif isinstance(midi_msg, PitchBend):
             print("PitchBlend")
-        elif isinstance(midi_msg, TimingClock):
-            print("Timing Clock")
-            handleMidiClk()
+#         elif isinstance(midi_msg, TimingClock):
+#             print("Timing Clock")
+#             handleMidiClk()
         else:  # Other messages
             print(midi_msg)
