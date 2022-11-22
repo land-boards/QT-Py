@@ -89,13 +89,13 @@ def handleFirstNoteOn(note,velocity):
     print(", Note CV =",notePitchCV,end='')
     voltsVal = (5.0 * notePitchCV) / 4096.0
     print(", volts", voltsVal)
-    writeCVD2A(0x3000 + notePitchCV)
+    writeCVD2AChannel(0,notePitchCV)
     pass
 
 def handleFirstNoteOff(note):
 #     print("First Note Off =",note)
     setGate(False)
-#    writeCVD2A(0x3000)
+#    writeCVD2AChannel(0,0)
     pass
 
 def getMIDIClkRate():
@@ -139,7 +139,7 @@ def handleControlChange(control, value):
     if control == 121:
 #         print("ControlChange: Reset All Controllers")
         noteOnFlag = False
-        writeCVD2A(0)
+        writeCVD2AChannel(0,0)
     elif control == 64:
         if value <= 63:
             print("ControlChange: Damper Pedal off")
@@ -155,29 +155,31 @@ def handleControlChange(control, value):
         print("ControlChange: All Sound Off")
         noteOnFlag = False
         setGate(False)
-#        writeCVD2A(0)
+#        writeCVD2AChannel(0,0)
     elif control == 123:
         print("ControlChange: All Notes Off")
         noteOnFlag = False
         setGate(False)
-#        writeCVD2A(0)
+#        writeCVD2AChannel(0,0)
     else:
         print("Other Control change - control =", control, ", value =", value)
 
 valCV0 = 0
 valCV1 = 0
 
-def writeCVD2A(outval):
-    # print("outval",outval)
-    # Lock the bus
-    #print("Check lock")
+def writeCVD2AChannel(channel,outval):
+    outval &= 0x0fff
+    if channel == 0:
+        outval += 0x3000
+    elif channel == 1:
+        outval += 0xB000
+    writeBytes = bytes([((outval >> 8) & 0xff), outval & 0xFF])
     while not spi.try_lock():
         pass
     spi.configure(baudrate=5000000, phase=0, polarity=0)
     cs.value = False
-    spi.write(bytes([((outval >> 8) & 0xff), outval & 0xFF]))
+    spi.write(writeBytes)
     cs.value = True
-    # Need to unlock bus when done
     spi.unlock()
     lddac.value = False
     microcontroller.delay_us(2)
@@ -189,7 +191,7 @@ def writeCVVals():
 #     ch1 = 0xD000
     for val0 in range(4096):
         outval = val0
-        writeCVD2A(outval + 0x3000)
+        writeCVD2AChannel(0,outval)
         microcontroller.delay_us(1000)
 
 # Set-up MIDI Clock Speed Pot
@@ -238,6 +240,9 @@ GATE.value = True   # high to turn off
 CLK.value = False    # low to turn on
 time.sleep(1)
 CLK.value = True   # high to turn off
+
+writeCVD2AChannel(0,0)
+writeCVD2AChannel(1,0)
 
 noteToCVTable = [0,      68,  137,  205,  273,  341,  410,  478,  546,  614,  683,  751, \
                  819,   887,  956, 1024, 1092, 1161, 1229, 1297, 1365, 1434, 1502, 1570, \
