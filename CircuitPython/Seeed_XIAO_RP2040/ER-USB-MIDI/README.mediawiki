@@ -14,3 +14,26 @@
 * MIDI on TRS A type connector
 * J6 = MIDI Serial output
 * J5 = MIDI Serial input (future feature)
+
+== Design ==
+
+=== XAIO RP2040 CPU ===
+
+<img src="http://land-boards.com/blwiki/images/8/87/ER-USB-MIDI_RP2040.PNG"></img>
+
+=== MIDI Jacks ===
+
+<img src="http://land-boards.com/blwiki/images/9/9e/ER-USB-MIDI_JACKS.PNG"></img>
+
+* J5, J6 = PJ366ST
+* Install both Pot/Jack headers/sockets
+** Female sockets on Controls card
+** Male Pins on Daughtercard
+
+=== MIDI In ===
+
+* 3.3V MIDI serial out to [[Arduino Pro Mini]]
+** R6 = 680
+** R7 = 1.2K
+
+<img src="http://land-boards.com/blwiki/images/2/2b/ER-USB-MIDI_IN.PNG"></img>
