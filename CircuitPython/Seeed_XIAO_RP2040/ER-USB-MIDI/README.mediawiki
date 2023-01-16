@@ -1,1 +1,14 @@
 = ER-USB-MIDI Card =
+
+* [http://land-boards.com/blwiki/index.php?title=ER-USB-MIDI ER-USB-MIDI Wiki page]
+
+== Features ==
+
+* USB MIDI to MIDI Serial Output
+** MIDI In/Out
+* Built on [[ER-PROTO-02]]
+* [[QT_Py_(RP2040_based)|XAIO RP2040 CPU]]
+* Based on [https://learn.adafruit.com/qt-py-rp2040-usb-to-serial-midi-friends/overview Adafruit QT Py RP2040 USB to Serial MIDI Friends design]
+* MIDI on TRS A type connector
+* J6 = MIDI Serial output
+* J5 = MIDI Serial input (future feature)
